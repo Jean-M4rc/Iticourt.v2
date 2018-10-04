@@ -1,0 +1,11 @@
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+a:hover {
+    color:#20c997;
+    text-decoration: none;
+}
