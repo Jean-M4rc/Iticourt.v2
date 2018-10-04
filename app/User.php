@@ -16,7 +16,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nickname', 'email', 'password','avatar_path'
+
+        'firstname','nickname','email','password','avatar_path','ban'
     ];
 
     /**
@@ -27,4 +28,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $dates = [
+        'created_at'=> 'datetime:d-m-Y',
+        'updated_at',
+        'deleted_at'
+    ];
+
+    public function seller()
+    {
+        return $this->hasOne('App\Seller');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
 }
