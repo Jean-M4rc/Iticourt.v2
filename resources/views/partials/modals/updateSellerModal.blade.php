@@ -6,7 +6,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalCenterTitle">Connexion</h2>
+                <h2 class="modal-title" id="exampleModalCenterTitle">Modifier mes informations</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -123,7 +123,7 @@
                                 <p class="form-text text-danger"> {{ $errors->first('long') }}</p>
                             @endif
             
-                            <input class="form-control mb-1" id="latInput" name="lat" placeholder="Latitude {{ auth()->user()->seller->latitude }}" type="text">
+                            <input class="form-control mb-1" id="latInput" name="lat" placeholder="Latitude : {{ auth()->user()->seller->latitude }}" type="text">
             
                             @if ($errors->has('lat'))
                                 <p class="form-text text-danger"> {{ $errors->first('lat') }}</p>

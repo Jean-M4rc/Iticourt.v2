@@ -41,8 +41,8 @@
                         <!-- cookiebox -->
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="customCheck1" name="remember" value="false" type="checkbox">
-                                    <label class="custom-control-label" for="customCheck1">Se souvenir de moi.</label>
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" name="remember_me"/>
+                                <label class="custom-control-label" for="customCheck1">Se souvenir de moi.</label>
                             </div>
                         </div>
 
