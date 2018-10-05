@@ -103,13 +103,13 @@
 
             <div class="form-group container">
 
-                <input class="form-control mb-1" id="longInput" name="long" placeholder="Longitude ex : 49.3154287" type="text" required>
+                <input class="form-control mb-1" id="longInput" name="long" placeholder="Longitude ex : -0.875458754" type="text" required>
 
                 @if ($errors->has('long'))
                     <p class="form-text text-danger"> {{ $errors->first('long') }}</p>
                 @endif
 
-                <input class="form-control mb-1" id="latInput" name="lat" placeholder="Latitude ex : -0.875458754" type="text" required>
+                <input class="form-control mb-1" id="latInput" name="lat" placeholder="Latitude ex : 49.3154287" type="text" required>
 
                 @if ($errors->has('lat'))
                     <p class="form-text text-danger"> {{ $errors->first('lat') }}</p>

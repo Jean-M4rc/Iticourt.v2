@@ -133,7 +133,7 @@ class RootController extends Controller
             }
         */
         
-        $seller->user()->delete();
+        //$seller->user()->delete();
 
         $seller->delete();
 

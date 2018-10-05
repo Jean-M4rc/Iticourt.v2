@@ -131,7 +131,7 @@ class InscriptionController extends Controller
         $category = request('product_category');
 
         // On attache le vendeur à ses categories
-        $seller->category()->attach($category);
+        $seller->categories()->attach($category);
 
         auth()->attempt([
             'email'=> request('email'),
