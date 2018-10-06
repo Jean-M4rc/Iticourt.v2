@@ -36,7 +36,7 @@
 <div class="form-group"><!-- passwd -->
 
     <label for="InputPassword" class="control-label">Mot de passe <span style="color:red">*</span></label>
-    <input class="form-control" name="password" placeholder="Mot de passe" type="password" required>
+    <input class="form-control" name="password" placeholder="Mot de passe" type="password" required/>
     <small id="passwordHelp" class="form-text text-muted">Minimum 6 caractères.</small>
 
     @if ($errors->has('password'))

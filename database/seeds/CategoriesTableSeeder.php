@@ -15,25 +15,13 @@ class CategoriesTableSeeder extends Seeder
             'name' => 'Fruits & Légumes',
         ]);
         DB::table('categories')->insert([
-            'name' => 'Volailles',
-        ]);
-        DB::table('categories')->insert([
-            'name' => 'Oeufs',
+            'name' => 'Viandes Volailles et Oeufs',
         ]);
         DB::table('categories')->insert([
             'name' => 'Laits & Fromages',
         ]);
         DB::table('categories')->insert([
-            'name' => 'Charcuterie',
-        ]);
-        DB::table('categories')->insert([
-            'name' => 'Boucherie',
-        ]);
-        DB::table('categories')->insert([
-            'name' => 'Textiles',
-        ]);
-        DB::table('categories')->insert([
-            'name' => 'Autres',
+            'name' => 'Boissons & Alcools',
         ]);
     }
 }

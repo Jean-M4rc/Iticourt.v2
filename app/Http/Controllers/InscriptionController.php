@@ -91,8 +91,6 @@ class InscriptionController extends Controller
 
         ]);
 
-        if($user)
-
         // Traitement des images
 
         // Image principale requise

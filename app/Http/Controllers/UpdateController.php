@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UpdateController extends Controller
 {
@@ -109,6 +110,8 @@ class UpdateController extends Controller
      */
     public function updateSeller()
     {
+        $seller = auth()->user()->seller;
+
         // Les catégories sont requises pour éviter toutes erreurs
         request()->validate([
             'product_category'=>['required','array'],
@@ -117,7 +120,7 @@ class UpdateController extends Controller
         // Le nom de la structure
         if (request('business_name')){
 
-            auth()->user()->seller()->update([
+            $seller->update([
                 'business_name'=>request('business_name'),
             ]);
 
@@ -131,7 +134,7 @@ class UpdateController extends Controller
                 'teaserSeller' => ['string','min:4'],
             ]);
 
-            auth()->user()->seller()->update([
+            $seller->update([
                 'presentation'=>request('teaserSeller'),
             ]);
 
@@ -145,7 +148,7 @@ class UpdateController extends Controller
                 'phone' => ['string'],
             ]);
 
-            auth()->user()->seller()->update([
+            $seller->update([
                 'telephone'=>request('phone'),
             ]);
 
@@ -159,7 +162,7 @@ class UpdateController extends Controller
                 'address' => ['string'],
             ]);
 
-            auth()->user()->seller()->update([
+            $seller->update([
                 'address'=>request('address'),
             ]);
 
@@ -170,12 +173,12 @@ class UpdateController extends Controller
         if (request('product_category')){
 
             //On détache les anciennes catégories
-            auth()->user()->seller->categories()->detach();
+            $seller->categories()->detach();
 
 
             // On attache le vendeur à ses categories
             $category = request('product_category');
-            auth()->user()->seller->categories()->attach($category);
+            $seller->categories()->attach($category);
 
         }
 
@@ -186,7 +189,7 @@ class UpdateController extends Controller
                 'long'=>['numeric', 'between:-180,180'],
             ]);
 
-            auth()->user()->seller()->update([
+            $seller->update([
                 'longitude'=>request('long'),
             ]);
 
@@ -199,7 +202,7 @@ class UpdateController extends Controller
                 'lat'=>['required','numeric', 'between:-90,90'],
             ]);
 
-            auth()->user()->seller()->update([
+            $seller->update([
                 'latitude'=>request('lat'),
             ]);
 
@@ -213,9 +216,17 @@ class UpdateController extends Controller
                 'avatarSeller1' => ['image'],
             ]);
 
+            //ici on supprime l'ancienne photo si elle existe
+            if($seller->avatar1_path){
+                $oldpicture = $seller->avatar1_path;
+                $filename = explode("/",$oldpicture);
+                $file = $filename[1];
+                Storage::delete('/public/sellersAvatar/'.$file);
+            }
+
             $path = request('avatarSeller1')->store('sellersAvatar','public');
 
-            auth()->user()->seller()->update([
+            $seller->update([
                 'avatar1_path' =>$path,
             ]);
 
@@ -224,6 +235,14 @@ class UpdateController extends Controller
 
         if (request('avatarSeller2')){
 
+            //ici on supprime l'ancienne photo si elle existe
+            if($seller->avatar2_path){
+                $oldpicture = $seller->avatar2_path;
+                $filename = explode("/",$oldpicture);
+                $file = $filename[1];
+                Storage::delete('/public/sellersAvatar/'.$file);
+            }
+            
             request()->validate([
                 'avatarSeller2' => ['image'],
             ]);
@@ -242,6 +261,14 @@ class UpdateController extends Controller
             request()->validate([
                 'avatarSeller3' => ['image'],
             ]);
+
+            //ici on supprime l'ancienne photo si elle existe
+            if($seller->avatar3_path){
+                $oldpicture = $seller->avatar3_path;
+                $filename = explode("/",$oldpicture);
+                $file = $filename[1];
+                Storage::delete('/public/sellersAvatar/'.$file);
+            }
 
             $path = request('avatarSeller3')->store('sellersAvatar','public');
 
