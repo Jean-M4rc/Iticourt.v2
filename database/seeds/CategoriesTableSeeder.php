@@ -16,7 +16,7 @@ class CategoriesTableSeeder extends Seeder
             'created_at' => now(),
         ]);
         DB::table('categories')->insert([
-            'name' => 'Viandes, Volailles et Oeufs',
+            'name' => 'Viandes & Oeufs',
             'created_at' => now(),
         ]);
         DB::table('categories')->insert([

@@ -75,37 +75,17 @@
                 
                             <div class="custom-control custom-checkbox col-12 col-sm-6 col-md-3">
                                 <input class="custom-control-input" id="product_category2" type="checkbox" name="product_category[]" value="2" {{ auth()->user()->seller->categories->find('2') ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="product_category2">Volailles</label>
+                                <label class="custom-control-label" for="product_category2">Viandes & Oeufs</label>
                             </div>
                 
                             <div class="custom-control custom-checkbox col-12 col-sm-6 col-md-3">
                                 <input class="custom-control-input" id="product_category3" type="checkbox" name="product_category[]" value="3" {{ auth()->user()->seller->categories->find('3') ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="product_category3">Oeufs</label>
+                                <label class="custom-control-label" for="product_category3">Laits & Fromages</label>
                             </div>
                 
                             <div class="custom-control custom-checkbox col-12 col-sm-6 col-md-3">
                                 <input class="custom-control-input" id="product_category4" type="checkbox" name="product_category[]" value="4" {{ auth()->user()->seller->categories->find('4') ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="product_category4">Laits & Fromages</label>
-                            </div>
-                
-                            <div class="custom-control custom-checkbox col-12 col-sm-6 col-md-3">
-                                <input class="custom-control-input" id="product_category5" type="checkbox" name="product_category[]" value="5" {{ auth()->user()->seller->categories->find('5') ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="product_category5">Charcuterie</label>
-                            </div>
-                
-                            <div class="custom-control custom-checkbox col-12 col-sm-6 col-md-3">
-                                <input class="custom-control-input" id="product_category6" type="checkbox" name="product_category[]" value="6" {{ auth()->user()->seller->categories->find('6') ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="product_category6">Boucherie</label>
-                            </div>
-                
-                            <div class="custom-control custom-checkbox col-12 col-sm-6 col-md-3">
-                                <input class="custom-control-input" id="product_category7" type="checkbox" name="product_category[]" value="7" {{ auth()->user()->seller->categories->find('7') ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="product_category7">Textiles</label>
-                            </div>
-                
-                            <div class="custom-control custom-checkbox col-12 col-sm-6 col-md-3">
-                                <input class="custom-control-input" id="product_category8" type="checkbox" name="product_category[]" value="8" {{ auth()->user()->seller->categories->find('8') ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="product_category8">Autres</label>
+                                <label class="custom-control-label" for="product_category4">Boissons & Alcools</label>
                             </div>
                 
                             @if ($errors->has('product_category'))

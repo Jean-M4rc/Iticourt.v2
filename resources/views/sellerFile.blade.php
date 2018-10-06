@@ -8,9 +8,9 @@
     <p class="lead">Vous pouvez consulter mes informations ici et commenter mes produits.</p>
     <hr class="my-4">
     <p>Me contacter  : {{$seller->phone}}</p>
-    <p>Mes categories de produits  : 
+    <p>Mes categories de produits  :<br/> 
         @foreach ($seller->categories as $category)
-            {{$category->name}} 
+            {{$category->name}}<br/> 
         @endforeach
     </p>
     <p>Mon adresse : {{$seller->address}}</p>
