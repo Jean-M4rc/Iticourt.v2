@@ -13,15 +13,19 @@ class CategoriesTableSeeder extends Seeder
     {
         DB::table('categories')->insert([
             'name' => 'Fruits & Légumes',
+            'created_at' => now(),
         ]);
         DB::table('categories')->insert([
-            'name' => 'Viandes Volailles et Oeufs',
+            'name' => 'Viandes, Volailles et Oeufs',
+            'created_at' => now(),
         ]);
         DB::table('categories')->insert([
             'name' => 'Laits & Fromages',
+            'created_at' => now(),
         ]);
         DB::table('categories')->insert([
             'name' => 'Boissons & Alcools',
+            'created_at' => now(),
         ]);
     }
 }
