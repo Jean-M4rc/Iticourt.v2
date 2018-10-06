@@ -84,13 +84,10 @@ class UpdateController extends Controller
 
             //On supprime l'ancienne image si ce n'est pas l'image par defaut.
             $oldpicture = $user->avatar_path;
-            if($oldpicture !=='usersAvatar/avatarUserDefault.jpeg'){
-
-                dd($oldpicture);
-                
+            if($oldpicture !=='usersAvatar/avatarUserDefault.jpeg'){                
                 $filename = explode("/",$oldpicture);
                 $file = $filename[1];
-                //Storage::delete('/public/sellersAvatar/'.$file);
+                Storage::delete('/public/usersAvatar/'.$file);
             }
             
             request()->validate([
