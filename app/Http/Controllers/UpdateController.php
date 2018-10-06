@@ -20,6 +20,8 @@ class UpdateController extends Controller
      */
     public function updateUser()
     {
+        $user = auth()->user();
+
         // Le pseudo
         if (request('nickname')){
 
@@ -27,7 +29,7 @@ class UpdateController extends Controller
                 'nickname' => ['string','min:4'],
             ]);
 
-            auth()->user()->update([
+            $user->update([
                 'nickname'=>request('nickname'),
             ]);
 
@@ -41,7 +43,7 @@ class UpdateController extends Controller
                 'firstname' => ['string','min:4'],
             ]);
 
-            auth()->user()->update([
+            $user->update([
                 'firstname'=>request('firstname'),
             ]);
 
@@ -55,7 +57,7 @@ class UpdateController extends Controller
                 'email' => ['email','unique:users,email'],
             ]);
 
-            auth()->user()->update([
+            $user->update([
                 'email'=>request('email'),
             ]);
 
@@ -70,7 +72,7 @@ class UpdateController extends Controller
                 'newPassword_confirmation' => ['required'],
             ]);
 
-            auth()->user()->update([
+            $user->update([
                 'password'=>bcrypt(request('newPassword')),
             ]);
 
@@ -80,19 +82,29 @@ class UpdateController extends Controller
         // la photo de profil
         if (request('avatarProfil')){
 
+            //On supprime l'ancienne image si ce n'est pas l'image par defaut.
+            $oldpicture = $user->avatar_path;
+            if($oldpicture !=='usersAvatar/avatarUserDefault.jpeg'){
+
+                dd($oldpicture);
+                
+                $filename = explode("/",$oldpicture);
+                $file = $filename[1];
+                //Storage::delete('/public/sellersAvatar/'.$file);
+            }
+            
             request()->validate([
                 'avatarProfil' => ['image'],
             ]);
 
             $path = request('avatarProfil')->store('usersAvatar','public');
 
-            auth()->user()->update([
+            $user->update([
                 'avatar_path' =>$path,
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
-
 
         return back();
     }
