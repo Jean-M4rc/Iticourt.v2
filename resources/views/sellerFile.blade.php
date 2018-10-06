@@ -12,8 +12,9 @@
         @foreach ($seller->categories as $category)
             {{$category->name}}<br/> 
         @endforeach
-    </p>
-    <p>Mon adresse : {{$seller->address}}</p>
+    </p><br/>
+    <p>Mon adresse :<br/>
+         {{$seller->address}}</p><br/>
     <div class="row mb-4">
         <p class="col-12 text-center">Les photos de mes produits :</p>
         

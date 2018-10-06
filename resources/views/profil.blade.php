@@ -48,6 +48,15 @@
     <p class="lead">
         <button class="btn btn-primary btn-lg" data-toggle="modal" data-target='#updateUserModal'>Modifier mes infos<span class="d-inline d-sm-none"><br></span> d'utilisateur</button>
     </p>
+    <form action="/deleteMyAccount" method="post" class="mt-2 mb-4">
+        @csrf
+        <input type="hidden" value="{{ auth()->user()->id }}" name="userID">
+        <button type="submit" class="btn btn-secondary btn-sm text-dark">Supprimer mon compte.<br/>
+            @if (auth()->user()->seller)
+                Supprimer aussi <span class="d-inline d-sm-none"><br></span>mon point de vente.
+            @endif
+        </button>
+    </form>
     @if (auth()->user()->seller)
         @include('partials.profilseller')
     @endif

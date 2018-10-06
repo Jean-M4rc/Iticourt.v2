@@ -44,7 +44,7 @@
     <p>Photo principale :
         @if((auth()->user()->seller->avatar1_path))
 
-        <br/><img src="/storage/{{ auth()->user()->seller->avatar1_path }}" alt="photo de point de vente" style="width:280px"/>
+        <br/><br/><img src="/storage/{{ auth()->user()->seller->avatar1_path }}" alt="photo de point de vente" style="width:280px"/>
 
         @else
 
@@ -75,16 +75,11 @@
         @endif
     </p>
 </div>
-<button class="btn btn-dark btn-lg mb-3" data-toggle="modal" data-target='#updateSellerModal'>Modifier les informations<span class="d-inline d-sm-none"><br></span> de votre point de vente</button>
+<button class="btn btn-primary btn-lg mb-3" data-toggle="modal" data-target='#updateSellerModal'>Modifier les informations<span class="d-inline d-sm-none"><br></span> de votre point de vente</button>
 <form action="/deleteMyShop" method="post" class="mt-2 mb-4">
     @csrf
     <input type="hidden" value="{{ auth()->user()->seller->id }}" name="sellerID">
-    <button type="submit" class="btn btn-primary btn-lg">Supprimer <span class="d-inline d-sm-none"><br></span>mon point de vente <br/> (mais rester utilisateur)</button>
-</form>
-<form action="/deleteMyAccount" method="post" class="mt-2 mb-4">
-    @csrf
-    <input type="hidden" value="{{ auth()->user()->id }}" name="sellerID">
-    <button type="submit" class="btn btn-secondary btn-lg text-dark">Supprimer <span class="d-inline d-sm-none"><br></span>mon compte</button>
+    <button type="submit" class="btn btn-secondary text-dark btn-sm">Supprimer <span class="d-inline d-sm-none"><br></span>mon point de vente </button>
 </form>
 
 @include('partials.modals.updateSellerModal')
