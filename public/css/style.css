@@ -16,6 +16,11 @@
         margin-top: 15px;
     }
 
+    #map {
+        width :300px;
+        height :300px;
+    }
+
 }
 
 .flex-center {

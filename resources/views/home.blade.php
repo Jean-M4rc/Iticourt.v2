@@ -41,8 +41,8 @@
         </ul>
     </div>
 
-    <div class="col-12 col-md-10 offset-md-1 col-lg-6 offset-lg-3 collapse multi-collapse" id="mapbox" style="">
-        <div style="height:75vh;background-color:blue"></div>
+    <div class="collapse multi-collapse" id="mapbox">
+        <div id="map"></div>
     </div>
     
 </div>
