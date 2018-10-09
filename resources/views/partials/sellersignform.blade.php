@@ -1,6 +1,5 @@
-<p class="container"><button class="btn btn-dark btn-block btn-lg my-5" type="button" data-toggle="collapse" data-target="#sellercollapse" aria-expanded="false" aria-controls="collapseExample">Vendeur ?</button></p>
 
-<form action="/inscriptionVendeur" method="post" class="container mb-5 collapse" enctype="multipart/form-data" id="sellercollapse"><!-- Formulaire pour les vendeurs -->
+<form action="/inscriptionVendeur" method="post" class="container mb-5" enctype="multipart/form-data" id="sellercollapse"><!-- Formulaire pour les vendeurs -->
 
     @csrf
 
