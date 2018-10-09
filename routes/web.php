@@ -54,4 +54,6 @@ Route::group([
 
     Route::post('/deleteMyAccount', 'CompteController@deleteMyAccount');
 
+    Route::post('/deleteMyShop', 'CompteController@deleteMyShop');
+
 });

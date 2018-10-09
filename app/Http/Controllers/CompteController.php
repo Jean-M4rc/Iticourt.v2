@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\User;
+use App\Seller;
 
 class CompteController extends Controller
 {
@@ -60,7 +61,6 @@ class CompteController extends Controller
                 $file = $filename[1];
                 Storage::delete('/public/sellersAvatar/'.$file);
             }
-
         }
 
         //On supprime la photo de profil.
@@ -74,6 +74,44 @@ class CompteController extends Controller
         $user->delete();
 
         flash('Vous avez supprimé votre compte. A bientôt !')->success();
+
+        return redirect('/');
+    }
+
+    public function deleteMyShop()
+    {
+        request()->validate([
+            'seller_id' => ['required'],
+        ]);
+        
+        $seller = Seller::where('id', request('seller_id'))->with('categories','comments')->first();
+
+        // On supprime la relation de catégorie
+        $seller->categories()->detach();
+
+        // On supprime les photo de point de vente
+        $oldpicture = $seller->avatar1_path;
+        $filename = explode("/",$oldpicture);
+        $file = $filename[1];
+        Storage::delete('/public/sellersAvatar/'.$file);
+        
+        if($seller->avatar2_path){
+            $oldpicture = $seller->avatar2_path;
+            $filename = explode("/",$oldpicture);
+            $file = $filename[1];
+            Storage::delete('/public/sellersAvatar/'.$file);
+        }
+
+        if($seller->avatar3_path){
+            $oldpicture = $seller->avatar3_path;
+            $filename = explode("/",$oldpicture);
+            $file = $filename[1];
+            Storage::delete('/public/sellersAvatar/'.$file);
+        }
+
+        $seller->delete();
+
+        flash('Votre point de vente a été supprimé')->success();
 
         return redirect('/');
     }

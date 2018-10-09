@@ -75,11 +75,13 @@
         @endif
     </p>
 </div>
-<button class="btn btn-primary btn-lg mb-3" data-toggle="modal" data-target='#updateSellerModal'>Modifier les informations<span class="d-inline d-sm-none"><br></span> de votre point de vente</button>
-<form action="/deleteMyShop" method="post" class="mt-2 mb-4">
-    @csrf
-    <input type="hidden" value="{{ $user->seller->id }}" name="sellerID">
-    <button type="submit" class="btn btn-secondary text-dark btn-sm">Supprimer <span class="d-inline d-sm-none"><br></span>mon point de vente </button>
-</form>
+<p>
+    <button class="btn btn-primary btn-lg mb-3" data-toggle="modal" data-target='#updateSellerModal'>Modifier les informations<span class="d-inline d-sm-none"><br></span> de votre point de vente</button>
+    <br/>
+    <button class="btn btn-secondary text-dark btn-sm" data-toggle="modal" data-target='#deleteMyShopModal'>Supprimer <span class="d-inline d-sm-none"><br></span>mon point de vente </button>
+</p>
+
 
 @include('partials.modals.updateSellerModal')
+
+@include('partials.modals.deleteMyShopModal')
