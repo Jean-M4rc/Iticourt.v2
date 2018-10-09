@@ -8,7 +8,7 @@
     <p class="lead">Vous pouvez consulter mes informations ici et commenter mes produits.</p>
     <hr class="my-4">
     <p>Me contacter  : {{$seller->phone}}</p>
-    <p>Mes categories de produits  :<br/> 
+    <p>Mes catégories de produits  :<br/> 
         @foreach ($seller->categories as $category)
             {{$category->name}}<br/> 
         @endforeach
@@ -17,32 +17,32 @@
          {{$seller->address}}</p><br/>
     <div class="row mb-4">
         <p class="col-12 text-center">Les photos de mes produits :</p>
+
+        @if(!$seller->avatar2_path && !$seller->avatar3_path)
+
+            <img class="col-12 col-sm-10 offset-sm-1 col-lg-8 offset-lg-2 imgsellerfile" src="/storage/{{ $seller->avatar1_path }}" alt="Première photo de produit"/>
+
+        @elseif(!$seller->avatar2_path)
+
+            <img class="col-12 col-md-6 col-lg-5 offset-lg-1 imgsellerfile"  src="/storage/{{ $seller->avatar1_path }}" alt="Première photo de produit"/>
+            <span class="d-md-none my-1"><br/></span>
+            <img class="col-12 col-md-6 col-lg-5 imgsellerfile" src="/storage/{{ $seller->avatar3_path }}" alt="Troisième photo de produit"/>
+
         
-        <div class="row">
+        @elseif(!$seller->avatar3_path)
 
-            @if(!$seller->avatar2_path && !$seller->avatar3_path)
+            <img class="col-12 col-md-6 col-lg-5 offset-lg-1 imgsellerfile"  src="/storage/{{ $seller->avatar1_path }}" alt="Première photo de produit"/>
+            <span class="d-md-none my-1"><br/></span>
+            <img class="col-12 col-md-6 col-lg-5 imgsellerfile" src="/storage/{{ $seller->avatar2_path }}" alt="Deuxième photo de produit"/>
 
-                <img class="col-12 col-sm-10 offset-sm-1 col-lg-8 offset-lg-2" src="/storage/{{ $seller->avatar1_path }}" alt="Première photo de produit"/>
-
-            @elseif(!$seller->avatar2_path)
-
-                <img class="col-12 col-md-6 col-lg-5 offset-lg-1 mb-2"  src="/storage/{{ $seller->avatar1_path }}" alt="Première photo de produit"/>
-                <img class="col-12 col-md-6 col-lg-5" src="/storage/{{ $seller->avatar3_path }}" alt="Troisième photo de produit"/>
-
-           
-            @elseif(!$seller->avatar3_path)
-
-                <img class="col-12 col-md-6 col-lg-5 offset-lg-1 mb-2"  src="/storage/{{ $seller->avatar1_path }}" alt="Première photo de produit"/>
-                <img class="col-12 col-md-6 col-lg-5" src="/storage/{{ $seller->avatar2_path }}" alt="Deuxième photo de produit"/>
-
-            @else
-                <img class="col-12 col-md-4 mb-2" src="/storage/{{ $seller->avatar1_path }}" alt="Première photo de produit"/>
-                <img class="col-12 col-md-4 mb-2" src="/storage/{{ $seller->avatar2_path }}" alt="Deuxième photo de produit"/>
-                <img class="col-12 col-md-4" src="/storage/{{ $seller->avatar3_path }}" alt="Troisième photo de produit"/>
-            @endif
-                
-
-        </div>
+        @else
+            <img class="col-12 col-md-4 imgsellerfile" src="/storage/{{ $seller->avatar1_path }}" alt="Première photo de produit"/>
+            <span class="d-md-none my-1"><br/></span>
+            <img class="col-12 col-md-4 imgsellerfile" src="/storage/{{ $seller->avatar2_path }}" alt="Deuxième photo de produit"/>
+            <span class="d-md-none my-1"><br/></span>
+            <img class="col-12 col-md-4 imgsellerfile" src="/storage/{{ $seller->avatar3_path }}" alt="Troisième photo de produit"/>
+        @endif
+            
     </div>
 
     @auth

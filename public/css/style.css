@@ -25,7 +25,7 @@
     justify-content: center;
 }
 
-a:hover, li:hover {
+a:hover {
     color:#20c997;
     text-decoration: none;
 }
@@ -33,5 +33,9 @@ a:hover, li:hover {
 #map {
     width :100%;
     height :75vh;
+}
+
+.imgsellerfile{
+    border-radius : 40px;
 }
 
