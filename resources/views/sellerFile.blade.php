@@ -54,11 +54,17 @@
                 <div class="form-group">
                     <h4>Laissez un commentaire !</h4>
                     <label class="text-dark" for="titleComment">Titre de votre commentaire :</label>
-                    <input class="form-control" id="titleComment" type="text" name="title"><br>
-                    <input type="hidden" name="user" value="{{auth()->user()->id}}">
+                    <input class="form-control" id="titleComment" type="text" name="title">
+                    @if ($errors->has('title'))
+                        <p class="form-text text-danger"> {{ $errors->first('title') }}</p>
+                    @endif
+                    <br><input type="hidden" name="user" value="{{auth()->user()->id}}">
                     <input type="hidden" name="seller" value="{{$seller->id}}">
                     <label class="text-dark text-center" for="TextareaSeller">Votre commentaire :</label>
                     <textarea class="form-control" id="TextareaSeller" rows="3" name="content"></textarea>
+                    @if ($errors->has('content'))
+                        <p class="form-text text-danger"> {{ $errors->first('content') }}</p>
+                    @endif
                 </div>
                 <button class="btn btn-primary" type="submit">Commenter</button>
             </fieldset>

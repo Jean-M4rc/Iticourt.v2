@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use App\User;
 
 class CompteController extends Controller
 {
     public function accueil()
     {
-        return view('profil');
+        $user = auth()->user();
+        return view('profil', [
+            'user' => $user,
+        ]);
     }
 
     public function deconnexion()
@@ -16,6 +21,59 @@ class CompteController extends Controller
         auth()->logout();
 
         flash("Vous êtes bien déconnecté. A bientôt !")->success();
+
+        return redirect('/');
+    }
+
+    public function deleteMyAccount()
+    {
+        request()->validate([
+            'user_id' => ['required'],
+        ]);
+        
+        $user = User::where('id', request('user_id'))->with('seller','comments')->first();
+
+        
+
+        if($user->seller){
+
+            $seller = $user->seller;
+            // On supprime la relation de catégorie
+            $seller->categories()->detach();
+
+            // On supprime les photo de point de vente
+            $oldpicture = $seller->avatar1_path;
+            $filename = explode("/",$oldpicture);
+            $file = $filename[1];
+            Storage::delete('/public/sellersAvatar/'.$file);
+            
+            if($seller->avatar2_path){
+                $oldpicture = $seller->avatar2_path;
+                $filename = explode("/",$oldpicture);
+                $file = $filename[1];
+                Storage::delete('/public/sellersAvatar/'.$file);
+            }
+
+            if($seller->avatar3_path){
+                $oldpicture = $seller->avatar3_path;
+                $filename = explode("/",$oldpicture);
+                $file = $filename[1];
+                Storage::delete('/public/sellersAvatar/'.$file);
+            }
+
+        }
+
+        //On supprime la photo de profil.
+        $oldpicture = $user->avatar_path;
+        if($oldpicture !=='usersAvatar/avatarUserDefault.jpeg'){                
+            $filename = explode("/",$oldpicture);
+            $file = $filename[1];
+            Storage::delete('/public/usersAvatar/'.$file);
+        }
+
+        $user->delete();
+
+        flash('Vous avez supprimé votre compte. A bientôt !')->success();
 
         return redirect('/');
     }

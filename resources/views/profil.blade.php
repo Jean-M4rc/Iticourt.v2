@@ -3,14 +3,14 @@
 @section('contenu')
 
 <div class="jumbotron text-center">
-    <h1>Bienvenue sur votre profil <strong>{{ auth()->user()->nickname }}</strong></h1>
+    <h1>Bienvenue sur votre profil <strong>{{ $user->nickname }}</strong></h1>
     <p class="lead">Vous pouvez consulter vos informations ici et modifier votre compte.</p>
     <hr class="my-4">
     <p>Votre nom : 
         
-        @if((auth()->user()->firstname))
+        @if(($user->firstname))
 
-        {{ auth()->user()->firstname }}
+        {{ $user->firstname }}
 
         @else
 
@@ -21,9 +21,9 @@
     </p>
     <p>Votre email : 
         
-        @if((auth()->user()->email))
+        @if(($user->email))
 
-        {{ auth()->user()->email }}
+        {{ $user->email }}
 
         @else
 
@@ -34,9 +34,9 @@
     </p>
     <p>Votre photo de profil : 
         
-        @if((auth()->user()->avatar_path))
+        @if(($user->avatar_path))
 
-        <br><img src="/storage/{{ auth()->user()->avatar_path }}" alt="photo de profil" style="width:200px"/>
+        <br><img src="/storage/{{ $user->avatar_path }}" alt="photo de profil" style="width:200px"/>
 
         @else
 
@@ -48,20 +48,20 @@
     <p class="lead">
         <button class="btn btn-primary btn-lg" data-toggle="modal" data-target='#updateUserModal'>Modifier mes infos<span class="d-inline d-sm-none"><br></span> d'utilisateur</button>
     </p>
-    <form action="/deleteMyAccount" method="post" class="mt-2 mb-4">
-        @csrf
-        <input type="hidden" value="{{ auth()->user()->id }}" name="userID">
-        <button type="submit" class="btn btn-secondary btn-sm text-dark">Supprimer mon compte.<br/>
-            @if (auth()->user()->seller)
+    <p class="lead">
+        <button type="button" class="btn btn-secondary btn-sm text-dark" data-toggle="modal" data-target='#modalDeleteUserAccount'>Supprimer mon compte.<br/>
+            @if ($user->seller)
                 Supprimer aussi <span class="d-inline d-sm-none"><br></span>mon point de vente.
             @endif
         </button>
-    </form>
-    @if (auth()->user()->seller)
+    </p>
+    @if ($user->seller)
         @include('partials.profilseller')
     @endif
 </div>
 
 @include('partials.modals.updateUserModal')
+
+@include('partials.modals.modalDeleteAccount')
     
 @endsection

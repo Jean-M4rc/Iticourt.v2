@@ -52,4 +52,6 @@ Route::group([
 
     Route::get('/deconnexion', 'CompteController@deconnexion'); 
 
+    Route::post('/deleteMyAccount', 'CompteController@deleteMyAccount');
+
 });

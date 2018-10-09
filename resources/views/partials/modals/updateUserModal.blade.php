@@ -22,7 +22,7 @@
                         <!-- Le pseudo nickname name:nickname-->
                         <div class="form-group">
                             <label for="nickname" class="control-label">Votre pseudo / prénom :</label>
-                            <input id="nickname" class="form-control" name="nickname" type="text" placeholder="{{ auth()->user()->nickname }}" />
+                            <input id="nickname" class="form-control" name="nickname" type="text" placeholder="{{ $user->nickname }}" />
     
                             @if ($errors->has('nickname'))
                                 <p class="form-text text-danger"> {{ $errors->first('nickname') }}</p>
@@ -32,7 +32,7 @@
                         <!-- Le firstname name:firstname -->
                         <div class="form-group">
                             <label for="firstname" class="control-label">Votre nom :</label>
-                            <input id="firstname" class="form-control" name="firstname" type="text" placeholder="{{ auth()->user()->firstname }}" />
+                            <input id="firstname" class="form-control" name="firstname" type="text" placeholder="{{ $user->firstname }}" />
     
                             @if ($errors->has('firstname'))
                                 <p class="form-text text-danger"> {{ $errors->first('firstname') }}</p>
@@ -42,7 +42,7 @@
                         <!-- Le mail name:email-->
                         <div class="form-group">
                             <label for="email" class="control-label">Adresse mail : </label>
-                            <input id="email" class="form-control" name="email" type="email" placeholder="{{ auth()->user()->email }}" />
+                            <input id="email" class="form-control" name="email" type="email" placeholder="{{ $user->email }}" />
 
                             @if ($errors->has('email'))
                                 <p class="form-text text-danger"> {{ $errors->first('email') }}</p>
