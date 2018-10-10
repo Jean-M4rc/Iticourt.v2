@@ -4,6 +4,16 @@
 
     <h1 class="my-4 text-center">Inscription à Iticourt</h1>
 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <p class="text-center">{{ $error }}</p>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <div class="accordion container" id="accordionExample">
         <div class="card">
             <div class="card-header" id="headingOne">
