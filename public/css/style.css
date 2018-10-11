@@ -1,31 +1,51 @@
 @media screen and (max-width: 576px) {
 
-    html, body, #mapbox {
-        width: 100vw;
+    html,
+    body,
+    #mapBox {
+        width: 95vw;
         padding: 0;
         margin: 0;
     }
+
     #buyingblock {
         margin-bottom: 15px;
     }
+
     #signinlink {
         margin-top: 15px;
     }
 
     #map {
-        height :75vh;
+        height: 75vh;
+        width:100%;
     }
 
 }
 
 @media screen and (min-width: 577px) {
 
+    #mapBox {
+        display: flex;
+        justify-content: center;
+    }
+
+    
     #map {
-        height :85vh;
+        height: 80vh;
+        width:100%;
     }
 
 }
 
+@media screen and (min-width: 777px) {
+
+    #map {
+        height: 85vh;
+        width:100%;
+    }
+
+}
 .flex-center {
     align-items: center;
     display: flex;
@@ -33,23 +53,31 @@
 }
 
 a:hover {
-    color:#20c997;
+    color: #20c997;
     text-decoration: none;
 }
 
-li:hover{
-    cursor :pointer;
+li:hover {
+    cursor: pointer;
 }
 
 #listcat {
     list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding-left :0;
+}
+
+.imgsellerfile {
+    border-radius: 40px;
+}
+
+#loader {
     display : flex;
-    justify-content : space-around;
-    width : 100%;
+    flex-direction: column;
+    height:50vh;
+    justify-content : center;
+    align-items :center;
+    cursor: wait;
 }
-
-.imgsellerfile{
-    border-radius : 40px;
-}
-
-

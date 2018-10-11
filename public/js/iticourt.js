@@ -20,8 +20,11 @@ $('#buybtn1').click(function(){
     $(signinlink).hide('slow');
     $(buyingblock).hide('slow');
     $(imgcat).show();
-    $(mapBox).show();
-
+    
+    
+    // On affiche un loader le temps de chargement de la map.
+    $('#loader').show();
+   
     if(navigator.geolocation) {
 
         // L'API est disponible
@@ -39,18 +42,17 @@ $('#buybtn1').click(function(){
 
             // Création de la map
             map = L.map('map').setView(usercoord, 10);
-
                
-            /*L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
             id: 'mapbox.streets',
             accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
-            }).addTo(map);*/
-
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}{r}.png', {
-                attribution: '© OpenStreetMap contributors'
             }).addTo(map);
+
+            /*L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);*/
 
             /*L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
             maxZoom: 20,
@@ -63,21 +65,22 @@ $('#buybtn1').click(function(){
             .addTo(map)
             .bindPopup('Je suis ici' +'\n'+'Ma latitude est : '+mylat+'\n'+'Ma longitude est : '+mylong+'\n'+'Ma vitesse est : '+myspeed); 
 
-
-            L.Routing.control({
-                waypoints: [
-                  L.latLng(49.182863, -0.370679), 
-                  L.latLng(49.276437, -0.70314) 
-                ]
-                
-            }).addTo(map);
-
-            L.Routing.itinerary(collapside.true);
         }
+
+        $(mapBox).show('slow');
     } else {
         
         alert('L\'application n\'est pas disponible sans l\'utilisation de votre géolocalisation');
-    }    
+    }
+
+    $('#map').ready( function(){
+        setTimeout(function(){
+            $('#loader').hide()
+        },3000)
+        
+    });
+    
+    
 });
 
 $(cancelmap).click(function(){
@@ -147,4 +150,14 @@ $('#getCoordonates').click(function(){
     attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 */
+
+function getroute(targetlat, targetlong, originlat, originlong){
+    L.Routing.control({
+        waypoints: [
+          L.latLng(49.182863, -0.370679), 
+          L.latLng(49.276437, -0.70314) 
+        ]
+        
+    }).addTo(map);
+}
   

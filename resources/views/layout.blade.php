@@ -16,13 +16,14 @@
         <!-- Boostwatch United -->
         <link href="css/united.min.css" rel="stylesheet" type="text/css">
 
-        <!-- style.css -->
-        <link href="css/style.css" rel="stylesheet" type="text/css">
-
+        
         <!-- leafletjs -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
         <!-- routingmachine -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+        
+        <!-- style.css -->
+        <link href="css/style.css" rel="stylesheet" type="text/css">
 
         
     </head>

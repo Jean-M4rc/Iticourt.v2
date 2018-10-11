@@ -31,7 +31,7 @@
     </div>
 
     <!-- les icones de produits -->
-    <div id ="imgcat" class="container my-2  col-12 col-md-10 offset-md-1 col-lg-6 offset-lg-3" style="display:none">
+    <div id ="imgcat" class="container my-2  col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2" style="display:none">
         <ul id="listcat" class="justify-content-around">
             <li><img class="imagecat" src="/storage/svg/carrot-and-apple.svg" alt='carrot' width="50px" height="50px"/></li>
             <li><img class="imagecat" src="/storage/svg/animals.svg" alt='animals' width="50px" height="50px"/></li>
@@ -41,7 +41,12 @@
         </ul>
     </div>
 
-    <div id="mapBox">
+    <div id="loader" style="display:none">
+        <img src="/storage/loader/ajax-loader.gif"/>
+        <p class="lead text-primary bold">Veuillez patientez</p>
+    </div>
+
+    <div id="mapBox" class="container my-2 col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
         <div id="map"></div>
     </div>
     
