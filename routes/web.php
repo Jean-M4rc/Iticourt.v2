@@ -25,6 +25,8 @@ Route::post('/connexion', 'ConnexionController@traitement');
 
 Route::get( '/sellersList' , 'SellerListController@sellersList');
 
+Route::get('/sellersMarkersGet', 'SellerListController@sellersMarkers');
+
 Route::get('/sellerFile{id}', 'SellerListController@sellerFile');
 
 Route::group([

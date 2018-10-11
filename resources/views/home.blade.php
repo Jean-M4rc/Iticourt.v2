@@ -33,11 +33,11 @@
     <!-- les icones de produits -->
     <div id ="imgcat" class="container my-2  col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2" style="display:none">
         <ul id="listcat" class="justify-content-around">
-            <li><img class="imagecat" src="/storage/svg/carrot-and-apple.svg" alt='carrot' width="50px" height="50px"/></li>
-            <li><img class="imagecat" src="/storage/svg/animals.svg" alt='animals' width="50px" height="50px"/></li>
-            <li><img class="imagecat" src="/storage/svg/milk.svg" alt='milk' width="50px" height="50px"/></li>
-            <li><img class="imagecat" src="/storage/svg/wine.svg" alt='wine' width="50px" height="50px"/></li>
-            <li id="cancelmap"><img class="imagecat" src="/storage/svg/cancel.svg" alt='cancel' width="50px" height="50px"/></li>
+            <li><img class="imagecat" src="/storage/svg/carrot-and-apple.svg" alt='carrot' width="70px" height="70px"/></li>
+            <li><img class="imagecat" src="/storage/svg/animals.svg" alt='animals' width="70px" height="70px"/></li>
+            <li><img class="imagecat" src="/storage/svg/milk.svg" alt='milk' width="70px" height="70px"/></li>
+            <li><img class="imagecat" src="/storage/svg/wine.svg" alt='wine' width="70px" height="70px"/></li>
+            <li id="cancelmap"><img class="imagecat" src="/storage/svg/cancel.svg" alt='cancel' width="70px" height="70px"/></li>
         </ul>
     </div>
 
@@ -47,7 +47,7 @@
     </div>
 
     <div id="mapBox" class="container my-2 col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-        <div id="map"></div>
+        <!--<div id="map"></div>-->
     </div>
     
 </div>

@@ -28,4 +28,11 @@ class SellerListController extends Controller
             'comments' => $comments,
         ]);
     }
+
+    public function sellersMarkers()
+    {
+        $categories = Category::with('sellers')->get();
+
+        return $categories;
+    }
 }
