@@ -30,7 +30,6 @@
         <div class="tab-pane active" id="cat1" role="tabpanel" aria-labelledby="cat1-tab">
 
             @include('partials.cat.nav_tab')
-
             @include('partials.cat.cat1_tab')
 
                 </tbody>
@@ -67,7 +66,6 @@
             </table>
 
         </div>
-
 
     </div>
 
