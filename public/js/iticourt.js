@@ -73,7 +73,8 @@ var mapComponent = {
         }
     },
 
-    sellersMarkers: function () {
+    // Cette méthode récupère tout les vendeurs
+    sellersMarkersAll: function () {
 
         axios({
                 method: 'get',
@@ -91,80 +92,158 @@ var mapComponent = {
                 // Fruits et Légumes
                 var catFL = categorySellers[0];
 
+                var sellersFL = [];
+
                 var greenIcon = L.icon({
                     iconUrl: '/storage/iconMarkers/markerGreen.png',
-                
-                    iconSize:     [38, 54], // size of the icon
-                    iconAnchor:   [19, 54], // point of the icon which will correspond to marker's location
+                    iconSize:     [24, 45], // size of the icon
+                    iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
                     popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
                 });
+
+                if(catFL.sellers.length != 0){
+
+                    for(var z = 0; z < catFL.sellers.length; z++){
+
+                        // On défini les données de chaque vendeur                        
+                        var sellerId = catFL.sellers[z].id;
+                        var sellerName = catFL.sellers[z].business_name;
+                        var sellerLat = catFL.sellers[z].latitude;
+                        var sellerLong = catFL.sellers[z].longitude;
+                        var sellerAvatar = catFL.sellers[z].avatar1_path;
+                        var sellerTeaser = catFL.sellers[z].presentation;
+
+                        var seller = L.marker([sellerLat, sellerLong], {icon : greenIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(map);
+
+                        sellersFL.push(seller);
+
+
+                    }
+
+                FLgroup = L.layerGroup(sellersFL);
+
+                }
+
+
+                
 
                 // Viandes et Oeufs
                 var catVO = categorySellers[1];
 
+                var sellersVO = [];
+
+                var redIcon = L.icon({
+                    iconUrl: '/storage/iconMarkers/markerRed.png',
+                    iconSize:     [24, 45], // size of the icon
+                    iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+                });
+
+                // S'il y a des vendeurs de cette catégorie on les affiche
+                if(catVO.sellers.length != 0){
+
+                    for(var z = 0; z < catVO.sellers.length; z++){
+
+                        // On défini les données de chaque vendeur                        
+                        var sellerId = catVO.sellers[z].id;
+                        var sellerName = catVO.sellers[z].business_name;
+                        var sellerLat = catVO.sellers[z].latitude;
+                        var sellerLong = catVO.sellers[z].longitude;
+                        var sellerAvatar = catVO.sellers[z].avatar1_path;
+                        var sellerTeaser = catVO.sellers[z].presentation;
+
+                        var seller = L.marker([sellerLat, sellerLong], {icon : redIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(map);
+
+                        sellersVO.push(seller);
+
+                    }
+
+                    VOgroup = L.layerGroup(sellersVO);
+
+                }
+
                 // Laits et Fromages
                 var catLF = categorySellers[2];
+
+                var sellersLF = [];
+
+                var yellowIcon = L.icon({
+                    iconUrl: '/storage/iconMarkers/markerYellow.png',
+                    iconSize:     [24, 45], // size of the icon
+                    iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+                });
+
+                // S'il y a des vendeurs de cette catégorie on les affiche
+                if(catLF.sellers.length != 0){
+
+                    for(var z = 0; z < catLF.sellers.length; z++){
+
+                        // On défini les données de chaque vendeur                        
+                        var sellerId = catLF.sellers[z].id;
+                        var sellerName = catLF.sellers[z].business_name;
+                        var sellerLat = catLF.sellers[z].latitude;
+                        var sellerLong = catLF.sellers[z].longitude;
+                        var sellerAvatar = catLF.sellers[z].avatar1_path;
+                        var sellerTeaser = catLF.sellers[z].presentation;
+
+                        var seller = L.marker([sellerLat, sellerLong], {icon : yellowIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(map);
+
+                        sellersLF.push(seller);
+
+                    }
+
+                    LFgroup = L.layerGroup(sellersLF);
+
+                }
 
                 // Boissons et Alcools
                 var catBA = categorySellers[3];
 
+                var sellersBA = [];
 
-                
-                
+                var purpleIcon = L.icon({
+                    iconUrl: '/storage/iconMarkers/markerPurple.png',
+                    iconSize:     [24, 45], // size of the icon
+                    iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+                });
 
-                for (var i = 0; i < categorySellers.length; i++) {
+                // S'il y a des vendeurs de cette catégorie on les affiche
+                if(catBA.sellers.length != 0){
 
-                    if(categorySellers[i].sellers.length != 0){
+                    for(var z = 0; z < catBA.sellers.length; z++){
 
-                        for(var z = 0; z < categorySellers[i].sellers.length; z++){
+                        // On défini les données de chaque vendeur                        
+                        var sellerId = catBA.sellers[z].id;
+                        var sellerName = catBA.sellers[z].business_name;
+                        var sellerLat = catBA.sellers[z].latitude;
+                        var sellerLong = catBA.sellers[z].longitude;
+                        var sellerAvatar = catBA.sellers[z].avatar1_path;
+                        var sellerTeaser = catBA.sellers[z].presentation;
 
-                            // On défini les données de chaque vendeur                        
-                            var sellerId = categorySellers[i].sellers[z].id;
-                            var sellerName = categorySellers[i].sellers[z].business_name;
-                            var sellerLat = categorySellers[i].sellers[z].latitude;
-                            var sellerLong = categorySellers[i].sellers[z].longitude;
-                            var sellerAvatar = categorySellers[i].sellers[z].avatar1_path;
-                            var sellerTeaser = categorySellers[i].sellers[z].presentation;
+                        var seller = L.marker([sellerLat, sellerLong], {icon : purpleIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(map);
 
-                            var seller = L.marker([sellerLat, sellerLong], {icon : greenIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(map);
-
-                        }
+                        sellersBA.push(seller);
 
                     }
-                    
-                    
+
+                    BAgroup = L.layerGroup(sellersBA);
+
                 }
 
-                /*function createMarker() {
 
-                    var dispo = ((stations[i].available_bikes));
 
-                    marker = new google.maps.Marker({
+                var overlayMaps = {
+                    "Fruits & Légumes": FLgroup,
+                    "Viandes & Oeufs" : VOgroup,
+                    "Laits & Fromages" : LFgroup,
+                    "Boissons & Alcools": BAgroup,
+                };
 
-                        position: stations[i].position,
-                        name: stations[i].name,
-                        address: stations[i].address,
-                        status: stations[i].status,
-                        bike_stands: stations[i].bike_stands,
-                        available_bike_stands: stations[i].available_bike_stands,
-                        available_bikes: stations[i].available_bikes,
-                        map: map,
-                        used: used,
-                        icon: image,
-                        indice: i
-                    });
+                L.control.layers(null, overlayMaps).addTo(map);
 
-                    markers.push(marker);
-                    marker.addListener('click', function () {
-                        
-                        //on initialise l'objet à réserver et on l'affiche dans l'infoBox
-                        etatStat.init(this.status, this.name, this.address, this.available_bike_stands, this.available_bikes, this.used, this.icon, this.indice);
-                        animDom.showEtat();
-                        map.setZoom(17);
-                        map.setCenter(this.getPosition());
 
-                    });
-                }*/
             })
     },
 
@@ -290,7 +369,8 @@ $('#buybtn1').click(function () {
                 .addTo(map)
                 .bindPopup('Je suis ici' + '\n' + 'Ma latitude est : ' + mylat + '\n' + 'Ma longitude est : ' + mylong + '\n' + 'Ma vitesse est : ' + myspeed);
 
-            mapComponent.sellersMarkers();
+            // par défault on récupère tout les vendeurs
+            mapComponent.sellersMarkersAll();
 
 
             $('.leaflet-container').ready(function () {

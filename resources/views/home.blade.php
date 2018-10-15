@@ -33,6 +33,7 @@
     <!-- les icones de produits -->
     <div id ="imgcat" class="container my-2  col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2" style="display:none">
         <ul id="listcat" class="justify-content-around">
+            <li><img class="imagecat" src="/storage/svg/shopping-list.svg" alt='allchecked' width="70px" height="70px"/></li>
             <li><img class="imagecat" src="/storage/svg/carrot-and-apple.svg" alt='carrot' width="70px" height="70px"/></li>
             <li><img class="imagecat" src="/storage/svg/animals.svg" alt='animals' width="70px" height="70px"/></li>
             <li><img class="imagecat" src="/storage/svg/milk.svg" alt='milk' width="70px" height="70px"/></li>
