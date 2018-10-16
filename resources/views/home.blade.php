@@ -31,15 +31,49 @@
     </div>
 
     <!-- les icones de produits -->
-    <div id ="imgcat" class="container my-2  col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2" style="display:none">
-        <ul id="listcat" class="justify-content-around">
+    <div id ="imgcat" class="my-2" style="display:none">
+        <!--<ul id="listcat" class="justify-content-around">
             <li><img class="imagecat" src="/storage/svg/shopping-list.svg" alt='allchecked' width="70px" height="70px"/></li>
             <li><img class="imagecat" src="/storage/svg/carrot-and-apple.svg" alt='carrot' width="70px" height="70px"/></li>
             <li><img class="imagecat" src="/storage/svg/animals.svg" alt='animals' width="70px" height="70px"/></li>
             <li><img class="imagecat" src="/storage/svg/milk.svg" alt='milk' width="70px" height="70px"/></li>
             <li><img class="imagecat" src="/storage/svg/wine.svg" alt='wine' width="70px" height="70px"/></li>
             <li id="cancelmap"><img class="imagecat" src="/storage/svg/cancel.svg" alt='cancel' width="70px" height="70px"/></li>
-        </ul>
+        </ul>-->
+        <div class="btn-group btn-group-toggle btncat col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 justify-content-around leaflet-control-layers-overlays" data-toggle="buttons">
+
+            <label id="labelCatAll" class="btn active mx-1 leaflet-control-layers-selector" for="option1"><!-- tout, par défaut -->
+              <input class="" type="radio" name="options" id="option1" autocomplete="off">
+              <img class="imagecat" src="/storage/svg/shopping-list.svg" alt='allchecked'/>
+            </label>
+
+            <label class="btn mr-1" id="icocatFL"><!-- cat FL -->
+              <input type="radio" class="leaflet-control-layers-selector" name="options" id="option2" autocomplete="off">
+              <img class="imagecat" src="/storage/svg/carrot-and-apple.svg" alt='carrot'/>
+            </label>
+
+            <label class="btn mr-1"><!-- cat VO -->
+              <input type="radio" class="leaflet-control-layers-selector" name="options" id="option3" autocomplete="off">
+              <img class="imagecat" src="/storage/svg/animals.svg" alt='animals'/>
+            </label>
+
+            <label class="btn mr-1"><!-- catLF -->
+                <input type="radio" class="leaflet-control-layers-selector" name="options" id="option4" autocomplete="off">
+                <img class="imagecat" src="/storage/svg/milk.svg" alt='milk'/>
+            </label>
+
+            <label class="btn"><!-- cat BA -->
+                <input type="radio" class="leaflet-control-layers-selector" name="options" id="option5" autocomplete="off">
+                <img class="imagecat" src="/storage/svg/wine.svg" alt='wine'/>
+            </label>
+
+            <a href="" class="btncat mx-1" id="cancelmap"><!-- close -->
+                <img class="imagecat" src="/storage/svg/cancel.svg" alt='cancel'/>
+            </a>
+
+        </div>
+        
+
     </div>
 
     <div id="loader" style="display:none">

@@ -15,7 +15,13 @@ var titleBlock = document.getElementById("titleblock"),
     mylong,
     mylat,
     myspeed,
-    userWatch;
+    userWatch,
+    FLgroup,
+    VOgroup,
+    LFgroup,
+    BAgroup,
+    overlayMaps,
+    sellersLF;
 
 // ------------------------------------------------------- //
 // ------------------------- MAP ------------------------- //
@@ -165,7 +171,7 @@ var mapComponent = {
                 // Laits et Fromages
                 var catLF = categorySellers[2];
 
-                var sellersLF = [];
+                sellersLF = [];
 
                 var yellowIcon = L.icon({
                     iconUrl: '/storage/iconMarkers/markerYellow.png',
@@ -234,7 +240,7 @@ var mapComponent = {
 
 
 
-                var overlayMaps = {
+                overlayMaps = {
                     "Fruits & Légumes": FLgroup,
                     "Viandes & Oeufs" : VOgroup,
                     "Laits & Fromages" : LFgroup,
@@ -343,7 +349,7 @@ $('#buybtn1').click(function () {
         // L'API est disponible
 
         // On déclare la variable userWatch afin de pouvoir par la suite annuler le suivi de la position
-        var userWatch = navigator.geolocation.watchPosition(userPosition);
+        userWatch = navigator.geolocation.watchPosition(userPosition);
 
         function userPosition(position) {
 
@@ -391,6 +397,7 @@ $(cancelmap).click(function () {
     // Annule le suivi de la position si nécessaire.
     navigator.geolocation.clearWatch(userWatch);
 
+    $('#labelCatAll').button('toggle');
     $('#map').remove();
     $(mapBox).hide();
     $(imgcat).hide('slow');
@@ -400,6 +407,11 @@ $(cancelmap).click(function () {
 
 });
 
+$('#icocatFL').click(function () {
+
+    console.log('clic catFL');
+    L.layerGroup(sellersLF).remove();
+});
 
 /**
  * Récupération des données GPS dans les formulaires
