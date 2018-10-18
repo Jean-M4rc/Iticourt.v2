@@ -40,30 +40,30 @@
             <li><img class="imagecat" src="/storage/svg/wine.svg" alt='wine' width="70px" height="70px"/></li>
             <li id="cancelmap"><img class="imagecat" src="/storage/svg/cancel.svg" alt='cancel' width="70px" height="70px"/></li>
         </ul>-->
-        <div class="btn-group btn-group-toggle btncat col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 justify-content-around leaflet-control-layers-overlays" data-toggle="buttons">
+        <div class="btn-group btn-group-toggle btncat col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 justify-content-around" data-toggle="buttons">
 
-            <label id="labelCatAll" class="btn active mx-1 leaflet-control-layers-selector" for="option1"><!-- tout, par défaut -->
-              <input class="" type="radio" name="options" id="option1" autocomplete="off">
+            <!--<label id="labelCatAll" class="btn active mx-1" for="option1">
+              <input class="" type="checkbox" name="options" id="option1" autocomplete="off">
               <img class="imagecat" src="/storage/svg/shopping-list.svg" alt='allchecked'/>
-            </label>
+            </label>-->
 
-            <label class="btn mr-1" id="icocatFL"><!-- cat FL -->
-              <input type="radio" class="leaflet-control-layers-selector" name="options" id="option2" autocomplete="off">
+            <label id="labelCatFL" class="btn mr-1" for="option2"><!-- cat FL -->
+              <input type="checkbox" name="options2" id="option2" autocomplete="off">
               <img class="imagecat" src="/storage/svg/carrot-and-apple.svg" alt='carrot'/>
             </label>
 
-            <label class="btn mr-1"><!-- cat VO -->
-              <input type="radio" class="leaflet-control-layers-selector" name="options" id="option3" autocomplete="off">
+            <label id="labelCatVO" class="btn mr-1"><!-- cat VO -->
+              <input type="checkbox" name="options3" id="option3" autocomplete="off">
               <img class="imagecat" src="/storage/svg/animals.svg" alt='animals'/>
             </label>
 
-            <label class="btn mr-1"><!-- catLF -->
-                <input type="radio" class="leaflet-control-layers-selector" name="options" id="option4" autocomplete="off">
+            <label id="labelCatLF" class="btn mr-1"><!-- catLF -->
+                <input type="checkbox" name="options4" id="option4" autocomplete="off">
                 <img class="imagecat" src="/storage/svg/milk.svg" alt='milk'/>
             </label>
 
-            <label class="btn"><!-- cat BA -->
-                <input type="radio" class="leaflet-control-layers-selector" name="options" id="option5" autocomplete="off">
+            <label id="labelCatBA" class="btn"><!-- cat BA -->
+                <input type="checkbox" name="options" id="option5" autocomplete="off">
                 <img class="imagecat" src="/storage/svg/wine.svg" alt='wine'/>
             </label>
 

@@ -21,7 +21,8 @@ var titleBlock = document.getElementById("titleblock"),
     LFgroup,
     BAgroup,
     overlayMaps,
-    sellersLF;
+    sellersLF,
+    inputsControlsLayers = [];
 
 // ------------------------------------------------------- //
 // ------------------------- MAP ------------------------- //
@@ -238,8 +239,6 @@ var mapComponent = {
 
                 }
 
-
-
                 overlayMaps = {
                     "Fruits & Légumes": FLgroup,
                     "Viandes & Oeufs" : VOgroup,
@@ -249,6 +248,33 @@ var mapComponent = {
 
                 L.control.layers(null, overlayMaps).addTo(map);
 
+                // On parcours les éléments ayant la classe des controleur leaflet 
+                $('.leaflet-control-layers-selector').each(function(){
+                    $(this).val('on');
+                    inputsControlsLayers.push($(this));
+                });
+
+                var inputCatFL = inputsControlsLayers[0];
+                var inputCatVO = inputsControlsLayers[1];
+                var inputCatLF = inputsControlsLayers[2];
+                var inputCatBA = inputsControlsLayers[3];
+
+
+                $('#labelCatFL').click(function () {  
+                    $(inputCatFL).trigger("click");
+                });
+
+                $('#labelCatVO').click(function () {  
+                    $(inputCatVO).trigger("click");
+                });
+
+                $('#labelCatLF').click(function () {  
+                    $(inputCatLF).trigger("click");
+                });
+
+                $('#labelCatBA').click(function () {  
+                    $(inputCatBA).trigger("click");
+                });
 
             })
     },
@@ -281,7 +307,8 @@ var mapComponent = {
             alert('Une erreur est survenue, veuillez réessayer.');
         }
 
-    }
+    },
+
 
 }
 
@@ -383,6 +410,8 @@ $('#buybtn1').click(function () {
                 $('#loader').hide();
             });
 
+            mapComponent.setMarkerTrigger();
+
         }
 
     } else {
@@ -391,6 +420,8 @@ $('#buybtn1').click(function () {
     }
 
 });
+
+
 
 $(cancelmap).click(function () {
 
@@ -407,11 +438,7 @@ $(cancelmap).click(function () {
 
 });
 
-$('#icocatFL').click(function () {
 
-    console.log('clic catFL');
-    L.layerGroup(sellersLF).remove();
-});
 
 /**
  * Récupération des données GPS dans les formulaires
