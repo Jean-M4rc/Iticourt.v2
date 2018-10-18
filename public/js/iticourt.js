@@ -99,7 +99,7 @@ var mapComponent = {
                 // Fruits et Légumes
                 var catFL = categorySellers[0];
 
-                var sellersFL = [];
+                //var sellersFL = [];
 
                 var greenIcon = L.icon({
                     iconUrl: '/storage/iconMarkers/markerGreen.png',
@@ -107,6 +107,8 @@ var mapComponent = {
                     iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
                     popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
                 });
+
+                var FLgroup = L.layerGroup();
 
                 if(catFL.sellers.length != 0){
 
@@ -120,24 +122,17 @@ var mapComponent = {
                         var sellerAvatar = catFL.sellers[z].avatar1_path;
                         var sellerTeaser = catFL.sellers[z].presentation;
 
-                        var seller = L.marker([sellerLat, sellerLong], {icon : greenIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(map);
-
-                        sellersFL.push(seller);
-
+                        var seller = L.marker([sellerLat, sellerLong], {icon : greenIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(FLgroup);//.addTo(map);
 
                     }
 
-                FLgroup = L.layerGroup(sellersFL);
+                FLgroup.addTo(map);
 
                 }
 
 
-                
-
                 // Viandes et Oeufs
                 var catVO = categorySellers[1];
-
-                var sellersVO = [];
 
                 var redIcon = L.icon({
                     iconUrl: '/storage/iconMarkers/markerRed.png',
@@ -145,6 +140,8 @@ var mapComponent = {
                     iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
                     popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
                 });
+
+                var VOgroup = L.layerGroup();
 
                 // S'il y a des vendeurs de cette catégorie on les affiche
                 if(catVO.sellers.length != 0){
@@ -159,20 +156,15 @@ var mapComponent = {
                         var sellerAvatar = catVO.sellers[z].avatar1_path;
                         var sellerTeaser = catVO.sellers[z].presentation;
 
-                        var seller = L.marker([sellerLat, sellerLong], {icon : redIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(map);
-
-                        sellersVO.push(seller);
-
+                        var seller = L.marker([sellerLat, sellerLong], {icon : redIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(VOgroup);
                     }
-
-                    VOgroup = L.layerGroup(sellersVO);
-
+                    VOgroup.addTo(map);
                 }
 
                 // Laits et Fromages
                 var catLF = categorySellers[2];
 
-                sellersLF = [];
+                var LFgroup = L.layerGroup();
 
                 var yellowIcon = L.icon({
                     iconUrl: '/storage/iconMarkers/markerYellow.png',
@@ -194,20 +186,15 @@ var mapComponent = {
                         var sellerAvatar = catLF.sellers[z].avatar1_path;
                         var sellerTeaser = catLF.sellers[z].presentation;
 
-                        var seller = L.marker([sellerLat, sellerLong], {icon : yellowIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(map);
-
-                        sellersLF.push(seller);
-
+                        var seller = L.marker([sellerLat, sellerLong], {icon : yellowIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(LFgroup);
                     }
-
-                    LFgroup = L.layerGroup(sellersLF);
-
+                    LFgroup.addTo(map);
                 }
 
                 // Boissons et Alcools
                 var catBA = categorySellers[3];
 
-                var sellersBA = [];
+                var BAgroup = L.layerGroup();
 
                 var purpleIcon = L.icon({
                     iconUrl: '/storage/iconMarkers/markerPurple.png',
@@ -229,29 +216,26 @@ var mapComponent = {
                         var sellerAvatar = catBA.sellers[z].avatar1_path;
                         var sellerTeaser = catBA.sellers[z].presentation;
 
-                        var seller = L.marker([sellerLat, sellerLong], {icon : purpleIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(map);
-
-                        sellersBA.push(seller);
-
+                        var seller = L.marker([sellerLat, sellerLong], {icon : purpleIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(BAgroup);
                     }
-
-                    BAgroup = L.layerGroup(sellersBA);
-
+                    BAgroup.addTo(map);
                 }
 
-                overlayMaps = {
+                var baselayers;
+                overlays = {
                     "Fruits & Légumes": FLgroup,
                     "Viandes & Oeufs" : VOgroup,
                     "Laits & Fromages" : LFgroup,
                     "Boissons & Alcools": BAgroup,
                 };
 
-                L.control.layers(null, overlayMaps).addTo(map);
+                L.control.layers(baselayers, overlays).addTo(map);
+                $('.leaflet-control-layers').addClass('invisible');
 
                 // On parcours les éléments ayant la classe des controleur leaflet 
                 $('.leaflet-control-layers-selector').each(function(){
-                    $(this).val('on');
                     inputsControlsLayers.push($(this));
+                    console.log($(this));
                 });
 
                 var inputCatFL = inputsControlsLayers[0];
@@ -410,8 +394,6 @@ $('#buybtn1').click(function () {
                 $('#loader').hide();
             });
 
-            mapComponent.setMarkerTrigger();
-
         }
 
     } else {
@@ -428,7 +410,10 @@ $(cancelmap).click(function () {
     // Annule le suivi de la position si nécessaire.
     navigator.geolocation.clearWatch(userWatch);
 
-    $('#labelCatAll').button('toggle');
+    inputsControlsLayers= [];
+    L.control.layers().remove();
+
+    $('.btncat>.btn').addClass('active');
     $('#map').remove();
     $(mapBox).hide();
     $(imgcat).hide('slow');

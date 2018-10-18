@@ -47,22 +47,22 @@
               <img class="imagecat" src="/storage/svg/shopping-list.svg" alt='allchecked'/>
             </label>-->
 
-            <label id="labelCatFL" class="btn mr-1" for="option2"><!-- cat FL -->
+            <label id="labelCatFL" class="btn mr-1 active" for="option2"><!-- cat FL -->
               <input type="checkbox" name="options2" id="option2" autocomplete="off">
               <img class="imagecat" src="/storage/svg/carrot-and-apple.svg" alt='carrot'/>
             </label>
 
-            <label id="labelCatVO" class="btn mr-1"><!-- cat VO -->
+            <label id="labelCatVO" class="btn mr-1 active"><!-- cat VO -->
               <input type="checkbox" name="options3" id="option3" autocomplete="off">
               <img class="imagecat" src="/storage/svg/animals.svg" alt='animals'/>
             </label>
 
-            <label id="labelCatLF" class="btn mr-1"><!-- catLF -->
+            <label id="labelCatLF" class="btn mr-1 active"><!-- catLF -->
                 <input type="checkbox" name="options4" id="option4" autocomplete="off">
                 <img class="imagecat" src="/storage/svg/milk.svg" alt='milk'/>
             </label>
 
-            <label id="labelCatBA" class="btn"><!-- cat BA -->
+            <label id="labelCatBA" class="btn active"><!-- cat BA -->
                 <input type="checkbox" name="options" id="option5" autocomplete="off">
                 <img class="imagecat" src="/storage/svg/wine.svg" alt='wine'/>
             </label>
