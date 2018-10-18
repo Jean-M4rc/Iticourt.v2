@@ -43,6 +43,7 @@ var mapComponent = {
             // L'API est disponible
 
             // On déclare la variable userWatch afin de pouvoir par la suite annuler le suivi de la position
+
             var userWatch = navigator.geolocation.watchPosition(userPosition);
 
             function userPosition(position) {
@@ -51,27 +52,36 @@ var mapComponent = {
                 mylat = position.coords.latitude;
                 myspeed = position.coords.speed;
 
-                return usercoord = [mylat, mylong];
+                usercoord = [mylat, mylong];
 
+            
+
+                // Création de la map
+                map = L.map('map').setView(usercoord, 10);
+
+                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox.streets',
+                    accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
+                }).addTo(map);
+
+                // Ajout d'un marqueur sur l'utilisateur
+
+                var blueIcon = L.icon({
+                    iconUrl: '/storage/iconMarkers/markerBlue.png',
+                    iconSize:     [24, 45], // size of the icon
+                    iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+                });
+
+                L.marker(usercoord, {icon : blueIcon}).addTo(map).openPopup('Ma latitude est : ' + mylat + '<br/>' + 'Ma longitude est : ' + mylong + '<br/>' + 'Ma vitesse est : ' + myspeed);
+
+                // Suppression du Loader lorsque les classes "leaflet" sont chargées
+                $('.leaflet-container').ready(function () {
+                    $('#loader').hide();
+                });
             }
-
-            // Création de la map
-            map = L.map('map').setView(userPosition(position), 10);
-
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 18,
-                id: 'mapbox.streets',
-                accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
-            }).addTo(map);
-
-            // Ajout d'un marqueur sur l'utilisateur
-            L.marker([mylat, mylong]).addTo(map).bindPopup('Ma latitude est : ' + mylat + '\n' + 'Ma longitude est : ' + mylong + '\n' + 'Ma vitesse est : ' + myspeed);
-
-            // Suppression du Loader lorsque les classes "leaflet" sont chargées
-            $('.leaflet-container').ready(function () {
-                $('#loader').hide();
-            });
 
 
         } else {
@@ -79,9 +89,38 @@ var mapComponent = {
             alert('L\'application n\'est pas disponible sans l\'utilisation de votre géolocalisation');
         }
     },
-
-    // Cette méthode récupère tout les vendeurs
+    //////////////////////////////////////////////
+    // Cette méthode récupère tout les vendeurs //
+    //////////////////////////////////////////////
     sellersMarkersAll: function () {
+
+        var greenIcon = L.icon({
+            iconUrl: '/storage/iconMarkers/markerGreen.png',
+            iconSize:     [24, 45], // size of the icon
+            iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
+            popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var redIcon = L.icon({
+            iconUrl: '/storage/iconMarkers/markerRed.png',
+            iconSize:     [24, 45], // size of the icon
+            iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
+            popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var yellowIcon = L.icon({
+            iconUrl: '/storage/iconMarkers/markerYellow.png',
+            iconSize:     [24, 45], // size of the icon
+            iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
+            popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var purpleIcon = L.icon({
+            iconUrl: '/storage/iconMarkers/markerPurple.png',
+            iconSize:     [24, 45], // size of the icon
+            iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
+            popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+        });
 
         axios({
                 method: 'get',
@@ -99,15 +138,6 @@ var mapComponent = {
                 // Fruits et Légumes
                 var catFL = categorySellers[0];
 
-                //var sellersFL = [];
-
-                var greenIcon = L.icon({
-                    iconUrl: '/storage/iconMarkers/markerGreen.png',
-                    iconSize:     [24, 45], // size of the icon
-                    iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
-                    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
-                });
-
                 var FLgroup = L.layerGroup();
 
                 if(catFL.sellers.length != 0){
@@ -122,24 +152,14 @@ var mapComponent = {
                         var sellerAvatar = catFL.sellers[z].avatar1_path;
                         var sellerTeaser = catFL.sellers[z].presentation;
 
-                        var seller = L.marker([sellerLat, sellerLong], {icon : greenIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(FLgroup);//.addTo(map);
+                        L.marker([sellerLat, sellerLong], {icon : greenIcon}).bindPopup('<p class="lead text-center">' + sellerName +'</p><p>' + sellerTeaser+'</p><p class="text-center lead"><a  href="/sellerFile'+sellerId+'"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Voir ma fiche</a></p>').addTo(FLgroup);
 
                     }
-
-                FLgroup.addTo(map);
-
+                    FLgroup.addTo(map);
                 }
-
 
                 // Viandes et Oeufs
                 var catVO = categorySellers[1];
-
-                var redIcon = L.icon({
-                    iconUrl: '/storage/iconMarkers/markerRed.png',
-                    iconSize:     [24, 45], // size of the icon
-                    iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
-                    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
-                });
 
                 var VOgroup = L.layerGroup();
 
@@ -147,7 +167,6 @@ var mapComponent = {
                 if(catVO.sellers.length != 0){
 
                     for(var z = 0; z < catVO.sellers.length; z++){
-
                         // On défini les données de chaque vendeur                        
                         var sellerId = catVO.sellers[z].id;
                         var sellerName = catVO.sellers[z].business_name;
@@ -164,14 +183,7 @@ var mapComponent = {
                 // Laits et Fromages
                 var catLF = categorySellers[2];
 
-                var LFgroup = L.layerGroup();
-
-                var yellowIcon = L.icon({
-                    iconUrl: '/storage/iconMarkers/markerYellow.png',
-                    iconSize:     [24, 45], // size of the icon
-                    iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
-                    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
-                });
+                var LFgroup = L.layerGroup();                
 
                 // S'il y a des vendeurs de cette catégorie on les affiche
                 if(catLF.sellers.length != 0){
@@ -196,12 +208,7 @@ var mapComponent = {
 
                 var BAgroup = L.layerGroup();
 
-                var purpleIcon = L.icon({
-                    iconUrl: '/storage/iconMarkers/markerPurple.png',
-                    iconSize:     [24, 45], // size of the icon
-                    iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
-                    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
-                });
+                
 
                 // S'il y a des vendeurs de cette catégorie on les affiche
                 if(catBA.sellers.length != 0){
@@ -318,7 +325,7 @@ var animDOM = {
 
         mapComponent.init();
 
-        mapComponent.sellersMarkers();
+        mapComponent.sellersMarkersAll();
     },
 
     hideMap: function () {
@@ -326,13 +333,16 @@ var animDOM = {
         // Annule le suivi de la position si nécessaire.
         navigator.geolocation.clearWatch(userWatch);
 
+        // Enlève les éléments désirés, ré-affecte certaines variables.
+        inputsControlsLayers= [];
+        L.control.layers().remove();
+        $('.btncat>.btn').addClass('active');
         $('#map').remove();
         $(mapBox).hide('slow');
         $(imgcat).hide('slow');
         $(titleblock).show('slow');
         $(signinlink).show('slow');
         $(buyingblock).show('slow');
-
     }
 }
 
@@ -342,6 +352,9 @@ var animDOM = {
 
 $('#buybtn1').click(function () {
 
+
+    animDOM.showMap();
+/*
     $(titleblock).hide('slow');
     $(signinlink).hide('slow');
     $(buyingblock).hide('slow');
@@ -382,9 +395,13 @@ $('#buybtn1').click(function () {
 
 
             // Ajout d'un marqueur sur l'utilisateur
-            L.marker([mylat, mylong])
-                .addTo(map)
-                .bindPopup('Je suis ici' + '\n' + 'Ma latitude est : ' + mylat + '\n' + 'Ma longitude est : ' + mylong + '\n' + 'Ma vitesse est : ' + myspeed);
+            var blueIcon = L.icon({
+                iconUrl: '/storage/iconMarkers/markerBlue.png',
+                iconSize:     [24, 45], // size of the icon
+                iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
+                popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+            });
+            L.marker([mylat, mylong], {icon : blueIcon}).addTo(map).bindPopup('Ma latitude est : ' + mylat + '<br/>' + 'Ma longitude est : ' + mylong + '<br/>' + 'Ma vitesse est : ' + myspeed);
 
             // par défault on récupère tout les vendeurs
             mapComponent.sellersMarkersAll();
@@ -400,7 +417,7 @@ $('#buybtn1').click(function () {
 
         alert('L\'application n\'est pas disponible sans l\'utilisation de votre géolocalisation');
     }
-
+*/
 });
 
 
