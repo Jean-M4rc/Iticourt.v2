@@ -181,7 +181,7 @@ var mapComponent = {
                 var sellerTeaser = catGroupParam.sellers[z].presentation;
     
                 L.marker([sellerLat, sellerLong], {icon : iconType}).bindPopup(
-                    '<p class="lead text-center"><a  href="/sellerFile'+sellerId+'">' + sellerName +'</a></p><p class="text-center lead"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/>Rejoindre ce vendeur</p>'
+                    '<p class="lead text-center"><a  href="/sellerFile'+sellerId+'">' + sellerName +'</a></p><p class="text-center"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/><br/><button type="button" class="btn btn-primary btn-sm">Rejoindre ce vendeur</button></p>'
                 ).addTo(layerGroupParam);
             }
             layerGroupParam.addTo(map);
