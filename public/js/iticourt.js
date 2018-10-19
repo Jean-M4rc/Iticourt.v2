@@ -2,7 +2,7 @@
 //                    ITICOURT                       //
 //---------------------------------------------------//
 
-// Déclaration des variables et des sélecteurs jQuery
+// Déclaration des variables globales et des sélecteurs jQuery
 
 var titleBlock = document.getElementById("titleblock"),
     signinlink = document.getElementById("signinlink"),
@@ -27,12 +27,10 @@ var titleBlock = document.getElementById("titleblock"),
 // ------------------------------------------------------- //
 // ------------------------- MAP ------------------------- //
 // ------------------------------------------------------- //
-// Ici on crée la map. On traite les informations pour
-// afficher les marqueurs, et créer les itinéraires.
-
 
 var mapComponent = {
 
+    // Création de la map et du marqueur de l'utilisateur
     init: function () {
 
         if (navigator.geolocation) {
@@ -80,6 +78,7 @@ var mapComponent = {
                 // Suppression du Loader lorsque les classes "leaflet" sont chargées
                 $('.leaflet-container').ready(function () {
                     $('#loader').hide();
+                    mapComponent.sellersMarkersAll();
                 });
             }
 
@@ -89,9 +88,8 @@ var mapComponent = {
             alert('L\'application n\'est pas disponible sans l\'utilisation de votre géolocalisation');
         }
     },
-    //////////////////////////////////////////////
-    // Cette méthode récupère tout les vendeurs //
-    //////////////////////////////////////////////
+    
+    // Cette méthode récupère tout les vendeurs
     sellersMarkersAll: function () {
 
         var greenIcon = L.icon({
@@ -137,7 +135,6 @@ var mapComponent = {
 
                 // Fruits et Légumes
                 var catFL = categorySellers[0];
-
                 var FLgroup = L.layerGroup();
 
                 if(catFL.sellers.length != 0){
@@ -160,7 +157,6 @@ var mapComponent = {
 
                 // Viandes et Oeufs
                 var catVO = categorySellers[1];
-
                 var VOgroup = L.layerGroup();
 
                 // S'il y a des vendeurs de cette catégorie on les affiche
@@ -182,7 +178,6 @@ var mapComponent = {
 
                 // Laits et Fromages
                 var catLF = categorySellers[2];
-
                 var LFgroup = L.layerGroup();                
 
                 // S'il y a des vendeurs de cette catégorie on les affiche
@@ -205,10 +200,7 @@ var mapComponent = {
 
                 // Boissons et Alcools
                 var catBA = categorySellers[3];
-
                 var BAgroup = L.layerGroup();
-
-                
 
                 // S'il y a des vendeurs de cette catégorie on les affiche
                 if(catBA.sellers.length != 0){
@@ -228,21 +220,19 @@ var mapComponent = {
                     BAgroup.addTo(map);
                 }
 
-                var baselayers;
-                overlays = {
+                var overlays = {
                     "Fruits & Légumes": FLgroup,
                     "Viandes & Oeufs" : VOgroup,
                     "Laits & Fromages" : LFgroup,
                     "Boissons & Alcools": BAgroup,
                 };
 
-                L.control.layers(baselayers, overlays).addTo(map);
+                L.control.layers(null, overlays).addTo(map);
                 $('.leaflet-control-layers').addClass('invisible');
 
                 // On parcours les éléments ayant la classe des controleur leaflet 
                 $('.leaflet-control-layers-selector').each(function(){
                     inputsControlsLayers.push($(this));
-                    console.log($(this));
                 });
 
                 var inputCatFL = inputsControlsLayers[0];
@@ -270,6 +260,25 @@ var mapComponent = {
             })
     },
 
+    // Récupération des coordonnées GPS pour le formulaire d'inscription
+    getPositionForm: function () {
+
+        if (navigator.geolocation) {
+
+            navigator.geolocation.getCurrentPosition(maPosition);
+
+            function maPosition(position) {
+
+                $('#longInput').val(position.coords.longitude);
+                $('#latInput').val(position.coords.latitude);
+            }
+        } else {
+            
+            alert('Une erreur est survenue, veuillez réessayer. Avez-vous accepté la géolocalisation ?');
+        }
+    },
+
+    // Mise en place de l'itinéraire vers un vendeur
     getRoute: function (targetlat, targetlong, originlat, originlong) {
 
         L.Routing.control({
@@ -280,37 +289,15 @@ var mapComponent = {
 
         }).addTo(map);
     },
-
-    getPositionForm: function () {
-
-        if (navigator.geolocation) {
-            // L'API est disponible
-
-            navigator.geolocation.getCurrentPosition(maPosition);
-
-            function maPosition(position) {
-
-                $('#longInput').val(position.coords.longitude);
-                $('#latInput').val(position.coords.latitude);
-            }
-        } else {
-            // Pas de support, proposer une alternative ?
-            alert('Une erreur est survenue, veuillez réessayer.');
-        }
-
-    },
-
-
-}
+};
 
 // ------------------------------------------------------- //
 // ------------------------ DOM SHOW --------------------- //
 // ------------------------------------------------------- //
-//Ici on anime le DOM. On affiche on masque certains éléments,
-// on en crée certains
 
 var animDOM = {
 
+    // Affichage de la map et animation du DOM correspondante
     showMap: function () {
 
         $(titleblock).hide('slow');
@@ -324,10 +311,9 @@ var animDOM = {
         mapBox.appendChild(mapDiv);
 
         mapComponent.init();
-
-        mapComponent.sellersMarkersAll();
     },
 
+    // Retrait de la map et animation du DOM correspondant
     hideMap: function () {
 
         // Annule le suivi de la position si nécessaire.
@@ -344,16 +330,115 @@ var animDOM = {
         $(signinlink).show('slow');
         $(buyingblock).show('slow');
     }
-}
+};
 
 // ------------------------------------------------------- //
-// --------------- METHODE PROCEDURALE  ------------------ //
+// ----------------------- EVENTS ------------------------ //
 // ------------------------------------------------------- //
 
 $('#buybtn1').click(function () {
-
-
     animDOM.showMap();
+});
+
+$(cancelmap).click(function () {
+
+    // Annule le suivi de la position si nécessaire.
+    navigator.geolocation.clearWatch(userWatch);
+
+    inputsControlsLayers= [];
+    L.control.layers().remove();
+
+    $('.btncat>.btn').addClass('active');
+    $('#map').remove();
+    $(mapBox).hide();
+    $(imgcat).hide('slow');
+    $(titleblock).show('slow');
+    $(signinlink).show('slow');
+    $(buyingblock).show('slow');
+
+});
+
+$('#getCoordonates').click(function () {
+    mapComponent.getPositionForm();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+/////////////////////// ZONE DE RECYCLAGE ////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+// Layer pas utiliser 
+
+/* 
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    maxZoom: 20,
+    attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    maxZoom: 20,
+    attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+*/
+
+
+// ancienne procédure 
+
+/*
+    function maPosition(position) {
+
+    mylong = position.coords.longitude;
+    mylat = position.coords.latitude;
+    // Création de la map
+    map = L.map('map').setView([mylat, mylong], 10);
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
+    }).addTo(map);
+
+    //Ajout d'un marqueur
+    L.marker([mylat, mylong])
+    .addTo(map)
+    .bindPopup('Je suis ici');  
+    }
+*/
+
+    // Création du calque images
+/*
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    maxZoom: 20,
+    attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+*/
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+/////////////// ANCIENNE METHODE ////////////////////////
+/////////////////////////////////////////////////////////
+
 /*
     $(titleblock).hide('slow');
     $(signinlink).hide('slow');
@@ -418,37 +503,13 @@ $('#buybtn1').click(function () {
         alert('L\'application n\'est pas disponible sans l\'utilisation de votre géolocalisation');
     }
 */
-});
 
 
+//////////////////////////////////////
+//////////////////////////////////////
+///// METHODE POUR LE FORMULAIRE D'INSCRIPTION
 
-$(cancelmap).click(function () {
-
-    // Annule le suivi de la position si nécessaire.
-    navigator.geolocation.clearWatch(userWatch);
-
-    inputsControlsLayers= [];
-    L.control.layers().remove();
-
-    $('.btncat>.btn').addClass('active');
-    $('#map').remove();
-    $(mapBox).hide();
-    $(imgcat).hide('slow');
-    $(titleblock).show('slow');
-    $(signinlink).show('slow');
-    $(buyingblock).show('slow');
-
-});
-
-
-
-/**
- * Récupération des données GPS dans les formulaires
- */
-$('#getCoordonates').click(function () {
-
-    // mapComponent.getPositionForm();
-
+/*
     if (navigator.geolocation) {
         // L'API est disponible
 
@@ -467,55 +528,4 @@ $('#getCoordonates').click(function () {
         alert('Une erreur est survenue, veuillez réessayer.');
 
     }
-});
-
-// Layer pas utiliser 
-
-/* L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap contributors'
-}).addTo(map); */
-
-/*L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-maxZoom: 20,
-attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);*/
-
-/*L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap contributors'
-}).addTo(map);*/
-
-/*L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-maxZoom: 20,
-attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);*/
-
-
-// ancienne procédure 
-
-/*
-    function maPosition(position) {
-
-    mylong = position.coords.longitude;
-    mylat = position.coords.latitude;
-    // Création de la map
-    map = L.map('map').setView([mylat, mylong], 10);
-
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
-    }).addTo(map);
-
-    //Ajout d'un marqueur
-    L.marker([mylat, mylong])
-    .addTo(map)
-    .bindPopup('Je suis ici');  
-    }*/
-// Création du calque images
-/*
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-    maxZoom: 20,
-    attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
 */
