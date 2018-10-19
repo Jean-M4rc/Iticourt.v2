@@ -12,16 +12,11 @@ var titleBlock = document.getElementById("titleblock"),
     cancelmap = document.getElementById("cancelmap"),
     mapBox = document.getElementById("mapBox"),
     map,
-    mylong,
-    mylat,
-    myspeed,
+    //mylong,
+    //mylat,
+    //myspeed,
     userWatch,
-    FLgroup,
-    VOgroup,
-    LFgroup,
-    BAgroup,
     overlayMaps,
-    sellersLF,
     inputsControlsLayers = [];
 
 // ------------------------------------------------------- //
@@ -216,9 +211,7 @@ var mapComponent = {
             ]
 
         }).addTo(map);
-    },
-
-    
+    },    
 };
 
 // ------------------------------------------------------- //
