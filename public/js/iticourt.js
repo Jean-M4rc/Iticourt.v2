@@ -9,13 +9,12 @@ var titleBlock = document.getElementById("titleblock"),
     buyingblock = document.getElementById("buyingblock"),
     listcat = document.getElementById("listcat"),
     imgcat = document.getElementById("imgcat"),
+    btnrouting = document.getElementById('btnrouting'),
     cancelmap = document.getElementById("cancelmap"),
     mapBox = document.getElementById("mapBox"),
     map,
-    //mylong,
-    //mylat,
-    //myspeed,
     userWatch,
+    sellerId,
     overlayMaps,
     inputsControlsLayers = [];
 
@@ -37,7 +36,7 @@ var mapComponent = {
 
             // On déclare la variable userWatch afin de pouvoir par la suite annuler le suivi de la position
 
-            var userWatch = navigator.geolocation.watchPosition(userPosition);
+            userWatch = navigator.geolocation.watchPosition(userPosition);
 
             function userPosition(position) {
 
@@ -50,10 +49,10 @@ var mapComponent = {
             
 
                 // Création de la map
-                map = L.map('map').setView(usercoord, 10);
+                map = L.map('map',{zoomControl:false}).setView(usercoord, 10);
 
                 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    attribution: 'Iticourt &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
                     maxZoom: 18,
                     id: 'mapbox.streets',
                     accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
@@ -156,6 +155,8 @@ var mapComponent = {
                 $('#labelCatBA').click(function () {  
                     $(inputCatBA).trigger("click");
                 });
+
+                
             })
     },
 
@@ -165,10 +166,10 @@ var mapComponent = {
     
         if(groupLength !=0){
     
-            for(var z = 0; z < groupLength; z++){
+            for(z = 0; z < groupLength; z++){
     
                 // On défini les données de chaque vendeur                        
-                var sellerId = catGroupParam.sellers[z].id;
+                sellerId = catGroupParam.sellers[z].id;
                 var sellerName = catGroupParam.sellers[z].business_name;
                 var sellerLat = catGroupParam.sellers[z].latitude;
                 var sellerLong = catGroupParam.sellers[z].longitude;
@@ -176,9 +177,9 @@ var mapComponent = {
                 var sellerTeaser = catGroupParam.sellers[z].presentation;
     
                 L.marker([sellerLat, sellerLong], {icon : iconType}).bindPopup(
-                    '<p class="lead text-center"><a  href="/sellerFile'+sellerId+'">' + sellerName +'</a></p><p class="text-center"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/><br/><button type="button" class="btn btn-primary btn-sm">Rejoindre ce vendeur</button></p>'
-                ).addTo(layerGroupParam);
-            }
+                    '<p class="lead text-center"><a  href="/sellerFile'+sellerId+'">' + sellerName +'</p><p class="text-center"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/></a><br/></p>'
+                ).addTo(layerGroupParam).openPopup();                
+            };
             layerGroupParam.addTo(map);
         }
     },
@@ -242,12 +243,12 @@ var animDOM = {
         // Annule le suivi de la position si nécessaire.
         navigator.geolocation.clearWatch(userWatch);
 
-        // Enlève les éléments désirés, ré-affecte certaines variables.
         inputsControlsLayers= [];
         L.control.layers().remove();
+
         $('.btncat>.btn').addClass('active');
         $('#map').remove();
-        $(mapBox).hide('slow');
+        $(mapBox).hide();
         $(imgcat).hide('slow');
         $(titleblock).show('slow');
         $(signinlink).show('slow');
@@ -264,31 +265,21 @@ $('#buybtn1').click(function () {
 });
 
 $(cancelmap).click(function () {
-
-    // Annule le suivi de la position si nécessaire.
-    navigator.geolocation.clearWatch(userWatch);
-
-    inputsControlsLayers= [];
-    L.control.layers().remove();
-
-    $('.btncat>.btn').addClass('active');
-    $('#map').remove();
-    $(mapBox).hide();
-    $(imgcat).hide('slow');
-    $(titleblock).show('slow');
-    $(signinlink).show('slow');
-    $(buyingblock).show('slow');
-
+    mapComponent.hideMap();
 });
 
 $('#getCoordonates').click(function () {
     mapComponent.getPositionForm();
 });
 
-///////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 /////////////////////// ZONE DE RECYCLAGE ////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
 
 // Layer pas utiliser 
 
