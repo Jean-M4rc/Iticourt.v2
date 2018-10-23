@@ -2,7 +2,7 @@
 
 @section('contenu')
 
-<div class="jumbotron text-center">
+<div id="sellerFile" class="jumbotron text-center">
 
     <h1>{{ $seller->business_name }}</h1>
     <p class="lead">Vous pouvez consulter mes informations ici et commenter mes produits.</p>
@@ -13,8 +13,15 @@
             {{$category->name}}<br/> 
         @endforeach
     </p><br/>
-    <p>Mon adresse :<br/>
-         {{$seller->address}}</p><br/>
+    <p>Mon adresse :<br/>{{$seller->address}}</p>
+    <br/>
+    <p>
+        <a href="#closeSellerMap"><button id="btnrouting" class="btn btn-lg btn-primary">
+            <span class="h3 text-dark font-weight-bold">Me rejoindre !</span>
+            <br/>
+            <small>Conçu pour les mobiles</small>
+        </button></a>
+    </p>
     <div class="row mb-4">
         <p class="col-12 text-center">Les photos de mes produits :</p>
 
@@ -99,6 +106,14 @@
     @endforeach
 
     </ul>
+</div>
+<div id="loader" style="display:none">
+    <img src="/storage/loader/ajax-loader.gif"/>
+    <p class="lead text-primary bold">Veuillez patientez</p>
+</div>
+
+<div id="mapBoxRouting" class="container my-0 col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2"  data="{{$seller->latitude}},{{$seller->longitude}}" >
+        
 </div>
 
 

@@ -12,8 +12,11 @@ var titleBlock = document.getElementById("titleblock"),
     btnrouting = document.getElementById('btnrouting'),
     cancelmap = document.getElementById("cancelmap"),
     mapBox = document.getElementById("mapBox"),
+    mapBoxRouting = document.getElementById("mapBoxRouting"),
+    sellerFile = document.getElementById("sellerFile"),
     map,
     userWatch,
+    usercoord,
     sellerId,
     overlayMaps,
     inputsControlsLayers = [];
@@ -35,21 +38,19 @@ var mapComponent = {
             // L'API est disponible
 
             // On déclare la variable userWatch afin de pouvoir par la suite annuler le suivi de la position
+            navigator.geolocation.getCurrentPosition(userPosition);
 
-            userWatch = navigator.geolocation.watchPosition(userPosition);
-
+            // Améliorer cette partie avec une requete de position juste à la création et pas de suivi de déplacement.
             function userPosition(position) {
 
                 mylong = position.coords.longitude;
                 mylat = position.coords.latitude;
-                myspeed = position.coords.speed;
 
                 usercoord = [mylat, mylong];
 
-            
 
                 // Création de la map
-                map = L.map('map',{zoomControl:false}).setView(usercoord, 10);
+                map = L.map('map').setView(usercoord, 8);
 
                 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     attribution: 'Iticourt &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
@@ -75,6 +76,108 @@ var mapComponent = {
                     mapComponent.sellersMarkersAll();
                 });
             }
+
+
+        } else {
+
+            alert('L\'application n\'est pas disponible sans l\'utilisation de votre géolocalisation');
+        }
+    },
+
+    // Création de la map de lapage Vendeur et itinéraire jusqu'à lui
+    initSellerMap: function () {
+
+        if (navigator.geolocation) {
+
+            //Lancement du Loader
+            $('#loader').show();
+
+            // L'API est disponible
+
+            // On déclare la variable userWatch afin de pouvoir par la suite annuler le suivi de la position
+                       
+            map = L.map('map2').fitWorld();
+            
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                attribution: 'Iticourt &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+                id: 'mapbox.streets',
+                accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
+            }).addTo(map);
+
+            map.locate({setView:true, maxZoom:16});
+
+            var blueIcon = L.icon({
+                iconUrl: '/storage/iconMarkers/markerBlue.png',
+                iconSize:     [24, 45],
+                iconAnchor:   [12, 45],
+                popupAnchor:  [0, -40]
+            });
+
+            function onLocationFound(e) {
+                L.marker(e.latlng,{icon : blueIcon}).addTo(map).bindPopup('<p class="alert alert-info">Vous</p>');
+            }
+
+            function onLocationError(e) {
+                alert(e.message);
+            }
+            
+            map.on('locationerror', onLocationError);
+            
+            map.on('locationfound', onLocationFound);
+
+            L.control.custom({
+                position: 'topright',
+                content : '<button type="button" class="btn btn-danger">'+
+                          '    <i class="fa fa-times"></i>'+
+                          '</button>',
+                classes : 'btn-group-vertical btn-group-sm',
+                style   :
+                {
+                    margin: '10px',
+                    padding: '0px 0 0 0',
+                    cursor: 'pointer',
+                },
+                datas   : {},
+                events  :
+                {
+                    click: function(data)
+                    {
+                        animDOM.hideMapSeller();
+                    },
+                }
+            }).addTo(map);
+
+            /*function userPosition(position) {
+
+                mylong = position.coords.longitude;
+                mylat = position.coords.latitude;
+                myspeed = position.coords.speed;
+
+                usercoord = [mylat, mylong];
+
+                // Création de la map
+                //map = L.map('map2',{zoomControl:true}).setView(usercoord, 10);
+
+                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    attribution: 'Iticourt &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                    maxZoom: 18,
+                    id: 'mapbox.streets',
+                    accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
+                }).addTo(map);
+
+                // Ajout d'un marqueur sur l'utilisateur
+*/
+                
+
+                
+
+                // Suppression du Loader lorsque les classes "leaflet" sont chargées
+                $('.leaflet-container').ready(function () {
+                    $('#loader').hide();
+                    // Ici mettre l'affichage du vendeur, et l'itinéraire correspondant
+                });
+            //}
 
 
         } else {
@@ -139,6 +242,60 @@ var mapComponent = {
                 var inputCatLF = inputsControlsLayers[2];
                 var inputCatBA = inputsControlsLayers[3];
 
+                L.control.custom({
+                    position: 'topright',
+                    content :   '<button type="button" id="close" class="btn" style="background:transparent">'+
+                                    '<img class="imagecat" src="/storage/svg/cancel.svg" style="background-color:rgba(0,0,0,0.5)" alt="cancel"/>'+
+                                '</button>'+
+                                '<button type="button" id="labelCatFL" class="btn btncat mx-0" style="background:transparent">'+
+                                    '<img class="imagecat" src="/storage/svg/carrot-and-apple.svg" style="background-color:rgba(0,0,0,0.5)" alt="carrot"/>'+
+                                '</button>'+
+                                '<button type="button" id="labelCatVO" class="btn mx-0" style="background:transparent">'+
+                                    '<img class="imagecat" src="/storage/svg/animals.svg" style="background-color:rgba(0,0,0,0.5)" alt="animals"/>'+
+                                '</button>'+
+                                '<button type="button" id="labelCatLF" class="btn mx-0" style="background:transparent">'+
+                                    '<img class="imagecat" src="/storage/svg/milk.svg" style="background-color:rgba(0,0,0,0.5)" alt="milk"/>'+
+                                '</button>'+                                
+                                '<button type="button" id="labelCatBA" class="btn" style="background:transparent">'+
+                                    '<img class="imagecat" src="/storage/svg/wine.svg" style="background-color:rgba(0,0,0,0.5)" alt="wine"/>'+
+                                '</button>',
+                    classes : 'btn-group-vertical btn-group-sm',
+                    style   :
+                    {
+                        marginRight: '0px',
+                        marginTop:'-40px',
+                        padding: '0 0 0 0',
+                        cursor: 'pointer',
+                        wrap: 'no-wrap',
+                        zIndex : '0',
+                    },
+                    datas   : 
+                    {
+                        'foo': 'bar',
+                    },
+                    events  :
+                    {
+                        click: function(data)
+                        {
+                            if(data.target.id == 'close'){
+                                animDOM.hideMap();
+                                console.log('on a cliquer close');
+                            }
+                            console.log('wrapper div element clicked');
+                            console.log(data);
+                        },
+                        dblclick: function(data)
+                        {
+                            console.log('wrapper div element dblclicked');
+                            console.log(data);
+                        },
+                        contextmenu: function(data)
+                        {
+                            console.log('wrapper div element contextmenu');
+                            console.log(data);
+                        },
+                    }
+                }).addTo(map);
 
                 $('#labelCatFL').click(function () {  
                     $(inputCatFL).trigger("click");
@@ -155,8 +312,6 @@ var mapComponent = {
                 $('#labelCatBA').click(function () {  
                     $(inputCatBA).trigger("click");
                 });
-
-                
             })
     },
 
@@ -174,10 +329,9 @@ var mapComponent = {
                 var sellerLat = catGroupParam.sellers[z].latitude;
                 var sellerLong = catGroupParam.sellers[z].longitude;
                 var sellerAvatar = catGroupParam.sellers[z].avatar1_path;
-                var sellerTeaser = catGroupParam.sellers[z].presentation;
     
                 L.marker([sellerLat, sellerLong], {icon : iconType}).bindPopup(
-                    '<p class="lead text-center"><a  href="/sellerFile'+sellerId+'">' + sellerName +'</p><p class="text-center"><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="120px" height="120px"/></a><br/></p>'
+                    '<p class="text-center font-weight-bold">' + sellerName +'</p><img class="d-flex mx-auto" src="/storage/'+sellerAvatar+'" width="150px"/><p class="text-center"><a href="/sellerFile'+sellerId+'"><button class="btn btn-primary p-1">Rejoindre ce vendeur</button></a></p>'
                 ).addTo(layerGroupParam).openPopup();                
             };
             layerGroupParam.addTo(map);
@@ -224,6 +378,7 @@ var animDOM = {
     // Affichage de la map et animation du DOM correspondante
     showMap: function () {
 
+        $('#navbar').hide('slow');
         $(titleblock).hide('slow');
         $(signinlink).hide('slow');
         $(buyingblock).hide('slow');
@@ -240,9 +395,6 @@ var animDOM = {
     // Retrait de la map et animation du DOM correspondant
     hideMap: function () {
 
-        // Annule le suivi de la position si nécessaire.
-        navigator.geolocation.clearWatch(userWatch);
-
         inputsControlsLayers= [];
         L.control.layers().remove();
 
@@ -250,9 +402,37 @@ var animDOM = {
         $('#map').remove();
         $(mapBox).hide();
         $(imgcat).hide('slow');
+        $('#navbar').show('slow');
         $(titleblock).show('slow');
         $(signinlink).show('slow');
         $(buyingblock).show('slow');
+    },
+
+    showMapSeller: function(){
+        
+        $(sellerFile).hide('slow');
+        $('#navbar').hide('slow');
+        $(mapBoxRouting).show('slow');
+        
+        var mapDiv = document.createElement("div");
+        mapDiv.id = "map2";
+        mapBoxRouting.appendChild(mapDiv);
+
+        mapComponent.initSellerMap();
+    },
+
+    hideMapSeller: function(){
+
+        // Annule le suivi de la position si nécessaire.
+        if(userWatch){
+            navigator.geolocation.clearWatch(userWatch);
+        }
+
+        $('#map2').remove();
+        $(sellerFile).show('slow');
+        $('#navbar').show('slow');
+        $(mapBoxRouting).hide('slow');
+        
     }
 };
 
@@ -265,12 +445,17 @@ $('#buybtn1').click(function () {
 });
 
 $(cancelmap).click(function () {
-    mapComponent.hideMap();
+    animDOM.hideMap();
 });
 
 $('#getCoordonates').click(function () {
     mapComponent.getPositionForm();
 });
+
+$(btnrouting).click(function() {
+    animDOM.showMapSeller();
+})
+
 
 
 

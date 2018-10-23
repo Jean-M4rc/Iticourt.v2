@@ -2,7 +2,8 @@
 
     html,
     body,
-    #mapBox {
+    #mapBox, 
+    #mapBoxRouting {
         width: 100vw;
         padding: 0;
         margin: 0;
@@ -10,22 +11,34 @@
 
     #buyingblock {
         margin-bottom: 15px;
+        margin-left:15px;
+        padding :0;
     }
 
     #signinlink {
         margin-top: 15px;
-        padding-right : 0;
+        margin-left : 15px;
     }
 
 
     #map {
-        height: 75vh;
+        height: 100vh;
         width:100%;
     }
 
+    #map2 {
+        height :100vh;
+        width:100vw;
+    }
+
+    .btn{
+        padding:0px;
+    }
+
     .imagecat{
-        width : 18vw;
+        width : 15vw;
         min-height :45px;
+        max-height : 55px;
     }
 
 
@@ -109,7 +122,7 @@ li:hover {
     cursor: wait;
 }
 
-Label.active>.imagecat {
+.btn.active>.imagecat {
     padding :10px;
     border-radius :25%;
     border: 2px solid red;
@@ -129,5 +142,10 @@ Label.active>.imagecat {
     background-color : transparent;
     border : none;
     box-shadow :none;
+}
+
+button:active, button:visited, button:focus{
+    border:none;
+    box-shadow: none;
 }
 
