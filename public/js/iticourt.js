@@ -245,19 +245,19 @@ var mapComponent = {
                 L.control.custom({
                     position: 'topright',
                     content :   '<button type="button" id="close" class="btn" style="background:transparent">'+
-                                    '<img class="imagecat" src="/storage/svg/cancel.svg" style="background-color:rgba(0,0,0,0.5)" alt="cancel"/>'+
+                                    '<img class="imagecat" src="/storage/svg/cancel.svg" style="background-color:white" alt="cancel"/>'+
                                 '</button>'+
                                 '<button type="button" id="labelCatFL" class="btn btncat mx-0" style="background:transparent">'+
-                                    '<img class="imagecat" src="/storage/svg/carrot-and-apple.svg" style="background-color:rgba(0,0,0,0.5)" alt="carrot"/>'+
+                                    '<img class="imagecat" src="/storage/svg/carrot-and-apple.svg" style="background-color:white" alt="carrot"/>'+
                                 '</button>'+
                                 '<button type="button" id="labelCatVO" class="btn mx-0" style="background:transparent">'+
-                                    '<img class="imagecat" src="/storage/svg/animals.svg" style="background-color:rgba(0,0,0,0.5)" alt="animals"/>'+
+                                    '<img class="imagecat" src="/storage/svg/animals.svg" style="background-color:white" alt="animals"/>'+
                                 '</button>'+
                                 '<button type="button" id="labelCatLF" class="btn mx-0" style="background:transparent">'+
-                                    '<img class="imagecat" src="/storage/svg/milk.svg" style="background-color:rgba(0,0,0,0.5)" alt="milk"/>'+
+                                    '<img class="imagecat" src="/storage/svg/milk.svg" style="background-color:white" alt="milk"/>'+
                                 '</button>'+                                
                                 '<button type="button" id="labelCatBA" class="btn" style="background:transparent">'+
-                                    '<img class="imagecat" src="/storage/svg/wine.svg" style="background-color:rgba(0,0,0,0.5)" alt="wine"/>'+
+                                    '<img class="imagecat" src="/storage/svg/wine.svg" style="background-color:white" alt="wine"/>'+
                                 '</button>',
                     classes : 'btn-group-vertical btn-group-sm',
                     style   :

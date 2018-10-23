@@ -60,10 +60,11 @@
     }
 
     
-    #map {
+    #map, #map2 {
         height: 80vh;
         width:100%;
     }
+
 
     .imagecat{
         width : 70px;
