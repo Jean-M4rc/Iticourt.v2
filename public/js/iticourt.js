@@ -15,6 +15,9 @@ var titleBlock = document.getElementById("titleblock"),
     mapBoxRouting = document.getElementById("mapBoxRouting"),
     sellerFile = document.getElementById("sellerFile"),
     map,
+    userLat,
+    userLong,
+    target,
     userWatch,
     usercoord,
     sellerId,
@@ -90,13 +93,12 @@ var mapComponent = {
         if (navigator.geolocation) {
 
             //Lancement du Loader
-            $('#loader').show();
+            $('#loader2').show();
 
             // L'API est disponible
 
-            // On déclare la variable userWatch afin de pouvoir par la suite annuler le suivi de la position
-                       
-            map = L.map('map2').fitWorld();
+            // On déclare la variable userWatch afin de pouvoir par la suite annuler le suivi de la position       
+            map = L.map('map2').locate({setView:true, maxZoom:16});
             
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                 attribution: 'Iticourt &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
@@ -104,8 +106,6 @@ var mapComponent = {
                 id: 'mapbox.streets',
                 accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
             }).addTo(map);
-
-            map.locate({setView:true, maxZoom:16});
 
             var blueIcon = L.icon({
                 iconUrl: '/storage/iconMarkers/markerBlue.png',
@@ -115,7 +115,13 @@ var mapComponent = {
             });
 
             function onLocationFound(e) {
-                L.marker(e.latlng,{icon : blueIcon}).addTo(map).bindPopup('<p class="alert alert-info">Vous</p>');
+
+                L.marker(e.latlng,{icon : blueIcon}).bindPopup('<p class="alert alert-info">Vous</p>').addTo(map);
+                
+                userLat = e.latlng.lat;
+                userLong = e.latlng.lng;
+                target = $('#mapBoxRouting').attr('data');     
+                
             }
 
             function onLocationError(e) {
@@ -148,38 +154,16 @@ var mapComponent = {
                 }
             }).addTo(map);
 
-            /*function userPosition(position) {
+            // Suppression du Loader lorsque les classes "leaflet" sont chargées
+            $('.leaflet-container').ready(function () {
+                $('#loader2').hide(); 
+                console.log(target);
+                mapComponent.getRoute(userLat,userLong, target);            
+            });
 
-                mylong = position.coords.longitude;
-                mylat = position.coords.latitude;
-                myspeed = position.coords.speed;
-
-                usercoord = [mylat, mylong];
-
-                // Création de la map
-                //map = L.map('map2',{zoomControl:true}).setView(usercoord, 10);
-
-                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                    attribution: 'Iticourt &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-                    maxZoom: 18,
-                    id: 'mapbox.streets',
-                    accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
-                }).addTo(map);
-
-                // Ajout d'un marqueur sur l'utilisateur
-*/
-                
-
-                
-
-                // Suppression du Loader lorsque les classes "leaflet" sont chargées
-                $('.leaflet-container').ready(function () {
-                    $('#loader').hide();
-                    // Ici mettre l'affichage du vendeur, et l'itinéraire correspondant
-                });
-            //}
-
-
+            
+            
+            
         } else {
 
             alert('L\'application n\'est pas disponible sans l\'utilisation de votre géolocalisation');
@@ -243,23 +227,23 @@ var mapComponent = {
                 var inputCatBA = inputsControlsLayers[3];
 
                 L.control.custom({
-                    position: 'topright',
+                    position:   'topright',
                     content :   '<button type="button" id="close" class="btn" style="background:transparent">'+
                                     '<img class="imagecat" src="/storage/svg/cancel.svg" style="background-color:white" alt="cancel"/>'+
                                 '</button>'+
-                                '<button type="button" id="labelCatFL" class="btn btncat mx-0" style="background:transparent">'+
-                                    '<img class="imagecat" src="/storage/svg/carrot-and-apple.svg" style="background-color:white" alt="carrot"/>'+
+                                '<button type="button" id="labelCatFL" class="btn mx-0" data-toggle="button" style="background:transparent">'+
+                                    '<img class="imagecat" src="/storage/svg/carrot-and-apple.svg" alt="carrot"/>'+
                                 '</button>'+
-                                '<button type="button" id="labelCatVO" class="btn mx-0" style="background:transparent">'+
-                                    '<img class="imagecat" src="/storage/svg/animals.svg" style="background-color:white" alt="animals"/>'+
+                                '<button type="button" id="labelCatVO" class="btn mx-0" data-toggle="button" style="background:transparent">'+
+                                    '<img class="imagecat" src="/storage/svg/animals.svg" alt="animals"/>'+
                                 '</button>'+
-                                '<button type="button" id="labelCatLF" class="btn mx-0" style="background:transparent">'+
-                                    '<img class="imagecat" src="/storage/svg/milk.svg" style="background-color:white" alt="milk"/>'+
+                                '<button type="button" id="labelCatLF" class="btn btncat mx-0" data-toggle="button" style="background:transparent">'+
+                                    '<img class="imagecat" src="/storage/svg/milk.svg" alt="milk"/>'+
                                 '</button>'+                                
-                                '<button type="button" id="labelCatBA" class="btn" style="background:transparent">'+
-                                    '<img class="imagecat" src="/storage/svg/wine.svg" style="background-color:white" alt="wine"/>'+
+                                '<button type="button" id="labelCatBA" class="btn" data-toggle="button" style="background:transparent">'+
+                                    '<img class="imagecat" src="/storage/svg/wine.svg" alt="wine"/>'+
                                 '</button>',
-                    classes : 'btn-group-vertical btn-group-sm',
+                    classes :   'btn-group-vertical btn-group-sm btn-group btn-group-toggle',
                     style   :
                     {
                         marginRight: '0px',
@@ -279,20 +263,7 @@ var mapComponent = {
                         {
                             if(data.target.id == 'close'){
                                 animDOM.hideMap();
-                                console.log('on a cliquer close');
                             }
-                            console.log('wrapper div element clicked');
-                            console.log(data);
-                        },
-                        dblclick: function(data)
-                        {
-                            console.log('wrapper div element dblclicked');
-                            console.log(data);
-                        },
-                        contextmenu: function(data)
-                        {
-                            console.log('wrapper div element contextmenu');
-                            console.log(data);
                         },
                     }
                 }).addTo(map);
@@ -357,12 +328,12 @@ var mapComponent = {
     },
 
     // Mise en place de l'itinéraire vers un vendeur
-    getRoute: function (targetlat, targetlong, originlat, originlong) {
+    getRoute: function (userLat, userLong, target) {
 
         L.Routing.control({
             waypoints: [
-                L.latLng(49.182863, -0.370679),
-                L.latLng(49.276437, -0.70314)
+                L.latLng(userLat, userLong),
+                L.latLng(target)
             ]
 
         }).addTo(map);
@@ -401,7 +372,7 @@ var animDOM = {
         $('.btncat>.btn').addClass('active');
         $('#map').remove();
         $(mapBox).hide();
-        $(imgcat).hide('slow');
+        //$(imgcat).hide('slow');
         $('#navbar').show('slow');
         $(titleblock).show('slow');
         $(signinlink).show('slow');

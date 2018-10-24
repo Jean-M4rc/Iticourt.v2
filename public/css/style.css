@@ -2,7 +2,7 @@
 
     html,
     body,
-    #mapBox, 
+    #mapBox,
     #mapBoxRouting {
         width: 100vw;
         padding: 0;
@@ -11,34 +11,33 @@
 
     #buyingblock {
         margin-bottom: 15px;
-        margin-left:15px;
-        padding :0;
+        margin-left: 15px;
+        padding: 0;
     }
 
     #signinlink {
         margin-top: 15px;
-        margin-left : 15px;
+        margin-left: 15px;
     }
 
 
     #map {
         height: 100vh;
-        width:100%;
+        width: 100%;
     }
 
     #map2 {
-        height :100vh;
-        width:100vw;
+        height: 100vh;
+        width: 100vw;
     }
 
-    .btn{
-        padding:0px;
+    .btn {
+        padding: 0px;
     }
 
-    .imagecat{
-        width : 15vw;
-        min-height :45px;
-        max-height : 55px;
+    .imagecat {
+        width: 45px;
+        height: 45px;
     }
 
 
@@ -59,16 +58,18 @@
         justify-content: center;
     }
 
-    
-    #map, #map2 {
+
+    #map,
+    #map2 {
+        margin-top :50px;
         height: 80vh;
-        width:100%;
+        width: 100%;
     }
 
 
-    .imagecat{
-        width : 70px;
-        height :70px;
+    .imagecat {
+        width: 70px;
+        height: 70px;
     }
 
 }
@@ -94,18 +95,18 @@ li:hover {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    padding-left :0;
+    padding-left: 0;
 }
 
 .imagecat {
-    padding :10px;
-    border-radius :25%;
+    padding: 10px;
+    border-radius: 25%;
     border: 1px solid black;
 }
 
 .imagecat:active {
-    padding :10px;
-    border-radius :25%;
+    padding: 10px;
+    border-radius: 25%;
     border: 2px solid red;
     background-color: #20c997;
 }
@@ -114,39 +115,34 @@ li:hover {
     border-radius: 40px;
 }
 
-#loader {
-    display : flex;
+#loader, #loader2 {
+    display: flex;
     flex-direction: column;
-    height:50vh;
-    justify-content : center;
-    align-items :center;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
     cursor: wait;
 }
 
+.btn>.imagecat {
+    padding: 10px;
+    border-radius: 25%;
+    border: 1px solid black;
+    background: #ffffff;
+}
+
 .btn.active>.imagecat {
-    padding :10px;
-    border-radius :25%;
+    padding: 10px;
+    border-radius: 25%;
     border: 2px solid red;
-    background-color: #20c997;
+    background: #20c997;
 }
 
-.btncat>.btn  {
-    padding :0;
-    margin :0;
-    background-color : transparent;
-    border : none;
-    box-shadow :none;
-}
-
-.btncat>.btn.active{
-
-    background-color : transparent;
-    border : none;
-    box-shadow :none;
-}
-
-button:active, button:visited, button:focus{
-    border:none;
+.btncat>.btn {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: none;
     box-shadow: none;
 }
 

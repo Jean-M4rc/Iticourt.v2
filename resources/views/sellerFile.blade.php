@@ -17,7 +17,7 @@
     <br/>
     <p>
         <a href="#closeSellerMap"><button id="btnrouting" class="btn btn-lg btn-primary">
-            <span class="h3 text-dark font-weight-bold">Me rejoindre !</span>
+            <span class="h3 text-dark font-weight-bold p-3">Me rejoindre !</span>
             <br/>
             <small>Conçu pour les mobiles</small>
         </button></a>
@@ -107,7 +107,7 @@
 
     </ul>
 </div>
-<div id="loader" style="display:none">
+<div id="loader2" style="display:none">
     <img src="/storage/loader/ajax-loader.gif"/>
     <p class="lead text-primary bold">Veuillez patientez</p>
 </div>
