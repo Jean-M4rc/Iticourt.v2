@@ -95,75 +95,83 @@ var mapComponent = {
             //Lancement du Loader
             $('#loader2').show();
 
-            // L'API est disponible
+            // On déclare la variable userWatch afin de pouvoir par la suite annuler le suivi de la position
+            userWatch = navigator.geolocation.watchPosition(userPosition);
 
-            // On déclare la variable userWatch afin de pouvoir par la suite annuler le suivi de la position       
-            map = L.map('map2').locate({setView:true, maxZoom:16});
+            function userPosition(position) {
+
+                mylong = position.coords.longitude;
+                mylat = position.coords.latitude;
+                myspeed = position.coords.speed;
+
+
+                // Création de la map
+                map = L.map('map2').setView([mylat,mylong], 8);
             
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                attribution: 'Iticourt &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-                maxZoom: 18,
-                id: 'mapbox.streets',
-                accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
-            }).addTo(map);
+                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    attribution: 'Iticourt &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                    maxZoom: 18,
+                    id: 'mapbox.streets',
+                    accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
+                }).addTo(map);
 
-            var blueIcon = L.icon({
-                iconUrl: '/storage/iconMarkers/markerBlue.png',
-                iconSize:     [24, 45],
-                iconAnchor:   [12, 45],
-                popupAnchor:  [0, -40]
-            });
+                var blueIcon = L.icon({
+                    iconUrl: '/storage/iconMarkers/markerBlue.png',
+                    iconSize:     [24, 45],
+                    iconAnchor:   [12, 45],
+                    popupAnchor:  [0, -40]
+                });
 
-            function onLocationFound(e) {
+                L.marker([mylat,mylong]).bindPopup('<p class="alert alert-info">Vous</p>').addTo(map);
+                    
+                target = $('#mapBoxRouting').attr('data');   
 
-                L.marker(e.latlng,{icon : blueIcon}).bindPopup('<p class="alert alert-info">Vous</p>').addTo(map);
-                
-                userLat = e.latlng.lat;
-                userLong = e.latlng.lng;
-                target = $('#mapBoxRouting').attr('data');     
-                
-            }
-
-            function onLocationError(e) {
-                alert(e.message);
-            }
-            
-            map.on('locationerror', onLocationError);
-            
-            map.on('locationfound', onLocationFound);
-
-            L.control.custom({
-                position: 'topright',
-                content : '<button type="button" class="btn btn-danger">'+
-                          '    <i class="fa fa-times"></i>'+
-                          '</button>',
-                classes : 'btn-group-vertical btn-group-sm',
-                style   :
-                {
-                    margin: '10px',
-                    padding: '0px 0 0 0',
-                    cursor: 'pointer',
-                },
-                datas   : {},
-                events  :
-                {
-                    click: function(data)
+                L.control.custom({
+                    position: 'topright',
+                    content : '<button type="button" class="btn btn-danger">'+
+                            '    <i class="fa fa-times"></i>'+
+                            '</button>',
+                    classes : 'btn-group-vertical btn-group-sm',
+                    style   :
                     {
-                        animDOM.hideMapSeller();
+                        margin: '10px',
+                        padding: '0px 0 0 0',
+                        cursor: 'pointer',
                     },
-                }
-            }).addTo(map);
+                    datas   : {},
+                    events  :
+                    {
+                        click: function(data)
+                        {
+                            animDOM.hideMapSeller();
+                        },
+                    }
+                }).addTo(map);
 
-            // Suppression du Loader lorsque les classes "leaflet" sont chargées
-            $('.leaflet-container').ready(function () {
-                $('#loader2').hide(); 
-                console.log(target);
-                mapComponent.getRoute(userLat,userLong, target);            
-            });
 
+                
+                targetsplit = target.split(',');
+                targetlat = targetsplit[0];
+                targetlong = targetsplit[1];
+               
+                //mapComponent.getRoute(mylat,mylong,targetlat,targetlong);
+
+                $.getJSON( "https://router.project-osrm.org/route/v1/driving/"+mylat+","+mylong+";"+targetlat+","+targetlong+"?overview=false&alternatives=true&steps=true&hints=;").done(function() {
+                    mapComponent.getRoute(mylat,mylong,targetlat,targetlong);
+                    })
+                    .fail(function() {
+                        //alert('Une erreur s\'est produite, veuillez attendre quelques minutes avant de relancer la carte');
+                        console.log('erreur');
+                        $('#modalError').modal('toggle');
+                    });
+                    
             
-            
-            
+                // Suppression du Loader lorsque les classes "leaflet" sont chargées
+                $('g').ready(function () {
+                    $('#loader2').hide();                         
+                });
+            }
+ 
         } else {
 
             alert('L\'application n\'est pas disponible sans l\'utilisation de votre géolocalisation');
@@ -328,15 +336,18 @@ var mapComponent = {
     },
 
     // Mise en place de l'itinéraire vers un vendeur
-    getRoute: function (userLat, userLong, target) {
-
-        L.Routing.control({
+    getRoute: function (userLat, userLong, targetlat, targetlong) {
+        
+        routing = L.Routing.control({
             waypoints: [
-                L.latLng(userLat, userLong),
-                L.latLng(target)
-            ]
+                L.latLng([userLat,userLong]),
+                L.latLng([targetlat,targetlong])
+            ],
+            alternatives:false,
+            itinerary : false,
 
         }).addTo(map);
+        $('.leaflet-routing-container').hide();
     },    
 };
 
@@ -395,10 +406,8 @@ var animDOM = {
     hideMapSeller: function(){
 
         // Annule le suivi de la position si nécessaire.
-        if(userWatch){
-            navigator.geolocation.clearWatch(userWatch);
-        }
-
+        navigator.geolocation.clearWatch(userWatch);
+        
         $('#map2').remove();
         $(sellerFile).show('slow');
         $('#navbar').show('slow');
@@ -425,6 +434,10 @@ $('#getCoordonates').click(function () {
 
 $(btnrouting).click(function() {
     animDOM.showMapSeller();
+})
+
+$('#closeModalError').click(function(){
+    animDOM.hideMapSeller();
 })
 
 
