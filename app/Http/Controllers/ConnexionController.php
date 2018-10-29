@@ -16,59 +16,31 @@ class ConnexionController extends Controller
     public function traitement()
     {
         request()->validate([
-            'email'=> ['required', 'email'],
+            'email' => ['required', 'email'],
             'password' => ['required', 'min:6'],
         ]);
 
-        // Méthode non fonctionnelle, le cookie est toujours actif  
-        
+        // Méthode non fonctionnelle, le cookie est toujours actif
+
         $remember = request('remember_me');
 
         $resultat = auth()->attempt([
-            'email'=> request('email'),
+            'email' => request('email'),
             'password' => request('password'),
             'ban' => 0,
         ], $remember);
-  
-        if($resultat){
+
+        if ($resultat) {
 
             flash("Vous êtes bien connecté.")->success();
 
             return back();
-        
+
         } else {
 
             flash()->overlay('Echec de la connexion !', 'Attention')->error();
 
             return back();
         }
-        
-        /*
-            // Issue de la doc mais non fonctionnelle non plus
-
-            if (Auth::attempt([
-
-                'email'=> request('email'),
-                'password' => request('password'),
-                'ban' => 0,
-                
-            ], $remember)) {
-
-                // Ici connecté avec le cookie
-
-                flash("Vous êtes bien connecté. Le cookie est défini")->success();
-
-                return redirect('/'); 
-
-            } else {
-
-                // Ici connecté sans cookie . pas connecté ?
-
-                flash()->overlay('Echec de la connexion !', 'Attention')->error();
-
-                return redirect('/');
-            };
-        */
-
     }
 }

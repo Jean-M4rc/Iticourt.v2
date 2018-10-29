@@ -31,12 +31,10 @@ class CompteController extends Controller
         request()->validate([
             'user_id' => ['required'],
         ]);
-        
-        $user = User::where('id', request('user_id'))->with('seller','comments')->first();
 
-        
+        $user = User::where('id', request('user_id'))->with('seller', 'comments')->first();
 
-        if($user->seller){
+        if ($user->seller) {
 
             $seller = $user->seller;
             // On supprime la relation de catégorie
@@ -44,31 +42,31 @@ class CompteController extends Controller
 
             // On supprime les photo de point de vente
             $oldpicture = $seller->avatar1_path;
-            $filename = explode("/",$oldpicture);
+            $filename = explode("/", $oldpicture);
             $file = $filename[1];
-            Storage::delete('/public/sellersAvatar/'.$file);
-            
-            if($seller->avatar2_path){
+            Storage::delete('/public/sellersAvatar/' . $file);
+
+            if ($seller->avatar2_path) {
                 $oldpicture = $seller->avatar2_path;
-                $filename = explode("/",$oldpicture);
+                $filename = explode("/", $oldpicture);
                 $file = $filename[1];
-                Storage::delete('/public/sellersAvatar/'.$file);
+                Storage::delete('/public/sellersAvatar/' . $file);
             }
 
-            if($seller->avatar3_path){
+            if ($seller->avatar3_path) {
                 $oldpicture = $seller->avatar3_path;
-                $filename = explode("/",$oldpicture);
+                $filename = explode("/", $oldpicture);
                 $file = $filename[1];
-                Storage::delete('/public/sellersAvatar/'.$file);
+                Storage::delete('/public/sellersAvatar/' . $file);
             }
         }
 
         //On supprime la photo de profil.
         $oldpicture = $user->avatar_path;
-        if($oldpicture !=='usersAvatar/avatarUserDefault.jpeg'){                
-            $filename = explode("/",$oldpicture);
+        if ($oldpicture !== 'usersAvatar/avatarUserDefault.jpeg') {
+            $filename = explode("/", $oldpicture);
             $file = $filename[1];
-            Storage::delete('/public/usersAvatar/'.$file);
+            Storage::delete('/public/usersAvatar/' . $file);
         }
 
         $user->delete();
@@ -83,30 +81,30 @@ class CompteController extends Controller
         request()->validate([
             'seller_id' => ['required'],
         ]);
-        
-        $seller = Seller::where('id', request('seller_id'))->with('categories','comments')->first();
+
+        $seller = Seller::where('id', request('seller_id'))->with('categories', 'comments')->first();
 
         // On supprime la relation de catégorie
         $seller->categories()->detach();
 
         // On supprime les photo de point de vente
         $oldpicture = $seller->avatar1_path;
-        $filename = explode("/",$oldpicture);
+        $filename = explode("/", $oldpicture);
         $file = $filename[1];
-        Storage::delete('/public/sellersAvatar/'.$file);
-        
-        if($seller->avatar2_path){
+        Storage::delete('/public/sellersAvatar/' . $file);
+
+        if ($seller->avatar2_path) {
             $oldpicture = $seller->avatar2_path;
-            $filename = explode("/",$oldpicture);
+            $filename = explode("/", $oldpicture);
             $file = $filename[1];
-            Storage::delete('/public/sellersAvatar/'.$file);
+            Storage::delete('/public/sellersAvatar/' . $file);
         }
 
-        if($seller->avatar3_path){
+        if ($seller->avatar3_path) {
             $oldpicture = $seller->avatar3_path;
-            $filename = explode("/",$oldpicture);
+            $filename = explode("/", $oldpicture);
             $file = $filename[1];
-            Storage::delete('/public/sellersAvatar/'.$file);
+            Storage::delete('/public/sellersAvatar/' . $file);
         }
 
         $seller->delete();
@@ -115,5 +113,5 @@ class CompteController extends Controller
 
         return redirect('/');
     }
-    
+
 }

@@ -19,9 +19,8 @@ class RootController extends Controller
      */
     public function administration()
     {
-
         return view('root', [
-            'utilisateurs' => User::with(['seller','comments'])->where('admin','0')->get(),
+            'utilisateurs' => User::with(['seller', 'comments'])->where('admin', '0')->get(),
             'pdvs' => Seller::with('categories')->get()->load('user'),
             'comments' => Comment::with('seller')->latest()->get()->load('user'),
         ]);
@@ -40,10 +39,9 @@ class RootController extends Controller
 
         $userId = request('userId');
 
-        $utilisateuràbannir = User::where('id',$userId)->first();
+        $utilisateuràbannir = User::where('id', $userId)->first();
 
-
-        if($utilisateuràbannir->ban === 1){
+        if ($utilisateuràbannir->ban === 1) {
 
             $utilisateuràbannir->update([
                 'ban' => 0,
@@ -52,13 +50,10 @@ class RootController extends Controller
         } else {
 
             $utilisateuràbannir->update([
-            'ban' => 1,
+                'ban' => 1,
             ]);
-
         }
-        
         return back();
-
     }
 
     /**
@@ -73,26 +68,36 @@ class RootController extends Controller
             'userId' => ['required'],
             'avatarSellers' => ['required']
         ]);
-        
+
         $sellerId = request('userId');
 
-        //On a validé l'envoi des données, on a au moins un choix et l'id
+        // On a validé l'envoi des données, on a au moins un choix et l'id
 
         $sellerModerate = Seller::where('id', $sellerId);
 
         $avatarSellers = request('avatarSellers');
 
-            foreach ($avatarSellers as $key => $avatarSeller) {
+        
 
-                // Tentative de suppression des photos à la mise à jour, a refaire !
-                // Storage::delete('avatar' . $avatarSeller . '_path', 'public');
+        foreach ($avatarSellers as $key => $avatarSeller) {
 
-                $sellerModerate->update([
-
-                    'avatar' . $avatarSeller . '_path' => 'sellersAvatar/avatarSellerDefault.jpg',
-                    
-                ]);
+            // Tentative de suppression des photos à la mise à jour, a refaire !
+            // Storage::delete('avatar' . $avatarSeller . '_path', 'public');
+            $path = 'avatar' . $avatarSeller . '_path';
+            $oldpicture = $seller->$path;
+            dd($oldpicture);
+            if($oldpicture !=='sellersAvatar/avatarSellerDefault.jpg'){                
+                $filename = explode("/",$oldpicture);
+                $file = $filename[1];
+                Storage::delete('/public/usersAvatar/'.$file);
             }
+
+            $sellerModerate->update([
+
+                'avatar' . $avatarSeller . '_path' => 'sellersAvatar/avatarSellerDefault.jpg',
+
+            ]);
+        }
 
         flash('Les photos sont modérées')->success();
 
@@ -109,7 +114,7 @@ class RootController extends Controller
         request()->validate([
             'seller_id' => ['required'],
         ]);
-        
+
         $seller = Seller::where('id', request('seller_id'))->first();
 
         // Suppression des images uploadés par le vendeur
@@ -131,7 +136,7 @@ class RootController extends Controller
 
                 Storage::delete($seller->avatar3_path);
             }
-        */
+         */
         
         //$seller->user()->delete();
 

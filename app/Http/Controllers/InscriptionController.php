@@ -29,15 +29,15 @@ class InscriptionController extends Controller
 
         request()->validate([
 
-            'email' => ['required', 'email','unique:users,email'],
-            'nickname' => ['required', 'string','min:4'],
-            'firstname' => ['string','nullable','min:3'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'nickname' => ['required', 'string', 'min:4'],
+            'firstname' => ['string', 'nullable', 'min:3'],
             'password' => ['required', 'confirmed', 'min:6'],
             'password_confirmation' => ['required'],
 
         ]);
 
-        
+
         $user = User::create([
 
             'email' => request('email'),
@@ -48,7 +48,7 @@ class InscriptionController extends Controller
         ]);
 
         auth()->attempt([
-            'email'=> request('email'),
+            'email' => request('email'),
             'password' => request('password'),
         ]);
 
@@ -63,23 +63,23 @@ class InscriptionController extends Controller
 
         request()->validate([
 
-            'email' => ['required', 'email','unique:users,email'],
-            'nickname' => ['required', 'string','min:4'],
-            'firstname' => ['string','nullable','min:3'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'nickname' => ['required', 'string', 'min:4'],
+            'firstname' => ['string', 'nullable', 'min:3'],
             'password' => ['required', 'confirmed', 'min:6'],
             'password_confirmation' => ['required'],
-            'businessName'=>['required'],
-            'phone'=>['required'],
-            'address'=>['required'],
-            'product_category'=>['required','array'],
-            'lat'=>['required','numeric', 'between:-90,90'],
-            'long'=>['required','numeric', 'between:-180,180'],
-            'teaserSeller'=>['required'],
-            'avatar'=>['required', 'image'],
-            'avatar1'=>['nullable', 'image'],
-            'avatar2'=>['nullable', 'image'],
+            'businessName' => ['required'],
+            'phone' => ['required'],
+            'address' => ['required'],
+            'product_category' => ['required', 'array'],
+            'lat' => ['required', 'numeric', 'between:-90,90'],
+            'long' => ['required', 'numeric', 'between:-180,180'],
+            'teaserSeller' => ['required'],
+            'avatar' => ['required', 'image'],
+            'avatar1' => ['nullable', 'image'],
+            'avatar2' => ['nullable', 'image'],
             'seller_confirmation' => ['required'],
-        
+
         ]);
 
         $user = User::create([
@@ -94,18 +94,18 @@ class InscriptionController extends Controller
         // Traitement des images
 
         // Image principale requise
-        $path1 = request('avatar')->store('sellersAvatar','public');
+        $path1 = request('avatar')->store('sellersAvatar', 'public');
 
         // Champs non requis - définition variables nulles.
-        $path2 ='';
-        $path3 ='';
+        $path2 = '';
+        $path3 = '';
 
-        if(request('avatar1')){
-            $path2 = request('avatar1')->store('sellersAvatar','public');
+        if (request('avatar1')) {
+            $path2 = request('avatar1')->store('sellersAvatar', 'public');
         }
-        
-        if (request('avatar2')){
-            $path3 = request('avatar2')->store('sellersAvatar','public');
+
+        if (request('avatar2')) {
+            $path3 = request('avatar2')->store('sellersAvatar', 'public');
         }
 
         // On défini le vendeur par l'user et la relation user->seller()
@@ -132,7 +132,7 @@ class InscriptionController extends Controller
         $seller->categories()->attach($category);
 
         auth()->attempt([
-            'email'=> request('email'),
+            'email' => request('email'),
             'password' => request('password'),
         ]);
 
