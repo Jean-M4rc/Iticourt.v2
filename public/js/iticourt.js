@@ -383,11 +383,10 @@ var animDOM = {
         $('.btncat>.btn').addClass('active');
         $('#map').remove();
         $(mapBox).hide();
-        //$(imgcat).hide('slow');
         $('#navbar').show('slow');
         $(titleblock).show('slow');
         $(signinlink).show('slow');
-        $(buyingblock).show('slow');
+        $(buyingblock).show('slow');        
     },
 
     showMapSeller: function(){
@@ -434,169 +433,8 @@ $('#getCoordonates').click(function () {
 
 $(btnrouting).click(function() {
     animDOM.showMapSeller();
-})
+});
 
 $('#closeModalError').click(function(){
     animDOM.hideMapSeller();
-})
-
-
-
-
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-/////////////////////// ZONE DE RECYCLAGE ////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-
-
-// Layer pas utiliser 
-
-/* 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-    maxZoom: 20,
-    attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-    maxZoom: 20,
-    attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-*/
-
-
-// ancienne procédure 
-
-/*
-    function maPosition(position) {
-
-    mylong = position.coords.longitude;
-    mylat = position.coords.latitude;
-    // Création de la map
-    map = L.map('map').setView([mylat, mylong], 10);
-
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
-    }).addTo(map);
-
-    //Ajout d'un marqueur
-    L.marker([mylat, mylong])
-    .addTo(map)
-    .bindPopup('Je suis ici');  
-    }
-*/
-
-    // Création du calque images
-/*
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-    maxZoom: 20,
-    attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-*/
-
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////// ANCIENNE METHODE ////////////////////////
-/////////////////////////////////////////////////////////
-
-/*
-    $(titleblock).hide('slow');
-    $(signinlink).hide('slow');
-    $(buyingblock).hide('slow');
-    $(imgcat).show();
-    $(mapBox).show('slow');
-    var mapDiv = document.createElement("div");
-    mapDiv.id = "map";
-    mapBox.appendChild(mapDiv);
-
-    // mapComponent.init(){
-    if (navigator.geolocation) {
-
-        //Loader
-        $('#loader').show();
-
-        // L'API est disponible
-
-        // On déclare la variable userWatch afin de pouvoir par la suite annuler le suivi de la position
-        userWatch = navigator.geolocation.watchPosition(userPosition);
-
-        function userPosition(position) {
-
-            mylong = position.coords.longitude;
-            mylat = position.coords.latitude;
-            myspeed = position.coords.speed;
-
-            var usercoord = [mylat, mylong];
-
-            // Création de la map
-            map = L.map('map').setView(usercoord, 10);
-
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 18,
-                id: 'mapbox.streets',
-                accessToken: 'pk.eyJ1IjoiajM0bm00cmMiLCJhIjoiY2puMGRsdDQyMmNoZjNxcXlobHRqdXljbiJ9.BvgT9e8mfV3snzZkgvYivg'
-            }).addTo(map);
-
-
-            // Ajout d'un marqueur sur l'utilisateur
-            var blueIcon = L.icon({
-                iconUrl: '/storage/iconMarkers/markerBlue.png',
-                iconSize:     [24, 45], // size of the icon
-                iconAnchor:   [12, 45], // point of the icon which will correspond to marker's location
-                popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
-            });
-            L.marker([mylat, mylong], {icon : blueIcon}).addTo(map).bindPopup('Ma latitude est : ' + mylat + '<br/>' + 'Ma longitude est : ' + mylong + '<br/>' + 'Ma vitesse est : ' + myspeed);
-
-            // par défault on récupère tout les vendeurs
-            mapComponent.sellersMarkersAll();
-
-
-            $('.leaflet-container').ready(function () {
-                $('#loader').hide();
-            });
-
-        }
-
-    } else {
-
-        alert('L\'application n\'est pas disponible sans l\'utilisation de votre géolocalisation');
-    }
-*/
-
-
-//////////////////////////////////////
-//////////////////////////////////////
-///// METHODE POUR LE FORMULAIRE D'INSCRIPTION
-
-/*
-    if (navigator.geolocation) {
-        // L'API est disponible
-
-        navigator.geolocation.getCurrentPosition(maPosition);
-
-        function maPosition(position) {
-
-            $('#longInput').val(position.coords.longitude);
-            $('#latInput').val(position.coords.latitude);
-
-        }
-
-    } else {
-
-        // Pas de support, proposer une alternative ?
-        alert('Une erreur est survenue, veuillez réessayer.');
-
-    }
-*/
+});
