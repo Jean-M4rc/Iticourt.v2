@@ -1,4 +1,3 @@
-
 <form action="/inscriptionAcheteur" method="post" class="container mb-5" id="buyercollapse"><!-- Formulaire Acheteur -->
 
     @csrf

@@ -35,8 +35,6 @@
                 <a href="/deconnexion"><button class="btn btn-primary">Déconnexion</button></a>
             </div>
 
-            
-
         @else
 
             <div class="btngroup">
@@ -45,9 +43,7 @@
             
                 <!-- bouton qui déclenche la modal de connexion -->
                 <button class="btn btn-primary" data-toggle="modal" data-target='#logInModal'>Connexion</button>
-            </div>
-
-            
+            </div>            
             
         @endauth
             

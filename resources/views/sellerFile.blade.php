@@ -112,29 +112,29 @@
     <p class="lead text-primary bold">Veuillez patientez</p>
 </div>
 
-<div id="mapBoxRouting" class="container my-0 col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2"  data="{{$seller->latitude}},{{$seller->longitude}}" >
+<div id="mapBoxRouting" class="container my-0 col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2" data="{{$seller->latitude}},{{$seller->longitude}}">
         
 </div>
 
 <div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="modalError" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Attention</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Attention</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body alert-warning text-center font-weight-bold">
+                Une erreur s'est produite pendant le chargement de votre itinéraire.<br/>
+                Veuillez relancer votre itinéraire dans quelques instants.
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeModalError" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+            </div>
         </div>
-        <div class="modal-body alert-warning text-center font-weight-bold">
-        Une erreur s'est produite pendant le chargement de votre itinéraire.<br/>
-        Veuillez relancer votre itinéraire dans quelques instants.
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="closeModalError" class="btn btn-primary" data-dismiss="modal">Fermer</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 
 @endsection
