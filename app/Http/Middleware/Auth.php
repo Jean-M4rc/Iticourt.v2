@@ -20,9 +20,7 @@ class Auth
             flash("Vous devez vous connecter pour voir cette page.")->error();
 
             return redirect('/');
-
         }
-        
         return $next($request);
     }
 }

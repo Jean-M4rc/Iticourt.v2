@@ -77,20 +77,23 @@ class RootController extends Controller
 
         $avatarSellers = request('avatarSellers');
 
-        
+
 
         foreach ($avatarSellers as $key => $avatarSeller) {
 
             // Tentative de suppression des photos à la mise à jour, a refaire !
+
             // Storage::delete('avatar' . $avatarSeller . '_path', 'public');
-            $path = 'avatar' . $avatarSeller . '_path';
-            $oldpicture = $seller->$path;
-            dd($oldpicture);
-            if($oldpicture !=='sellersAvatar/avatarSellerDefault.jpg'){                
-                $filename = explode("/",$oldpicture);
-                $file = $filename[1];
-                Storage::delete('/public/usersAvatar/'.$file);
-            }
+            /*
+                $path = 'avatar' . $avatarSeller . '_path';
+                $oldpicture = $seller->$path;
+                dd($oldpicture);
+                if($oldpicture !=='sellersAvatar/avatarSellerDefault.jpg'){                
+                    $filename = explode("/",$oldpicture);
+                    $file = $filename[1];
+                    Storage::delete('/public/usersAvatar/'.$file);
+                }
+             */
 
             $sellerModerate->update([
 

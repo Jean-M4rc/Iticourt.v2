@@ -22,7 +22,7 @@ class SellerListController extends Controller
     {
         $seller = Seller::where('id', request('id'))->get()->first();
         $comments = Comment::with('user')->where('seller_id', request('id'))->latest()->get();
-        
+
         return view('sellerFile', [
             'seller' => $seller,
             'comments' => $comments,

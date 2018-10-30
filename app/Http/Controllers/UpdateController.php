@@ -23,86 +23,85 @@ class UpdateController extends Controller
         $user = auth()->user();
 
         // Le pseudo
-        if (request('nickname')){
+        if (request('nickname')) {
 
             request()->validate([
-                'nickname' => ['string','min:4'],
+                'nickname' => ['string', 'min:4'],
             ]);
 
             $user->update([
-                'nickname'=>request('nickname'),
+                'nickname' => request('nickname'),
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
         
         // Le nom
-        if (request('firstname')){
+        if (request('firstname')) {
 
             request()->validate([
-                'firstname' => ['string','min:4'],
+                'firstname' => ['string', 'min:4'],
             ]);
 
             $user->update([
-                'firstname'=>request('firstname'),
+                'firstname' => request('firstname'),
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
 
         // l'email
-        if (request('email')){
+        if (request('email')) {
 
             request()->validate([
-                'email' => ['email','unique:users,email'],
+                'email' => ['email', 'unique:users,email'],
             ]);
 
             $user->update([
-                'email'=>request('email'),
+                'email' => request('email'),
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
 
         // le nouveau mot de passe
-        if (request('newPassword')){
+        if (request('newPassword')) {
 
             request()->validate([
-                'newPassword' => ['confirmed','min:6'],
+                'newPassword' => ['confirmed', 'min:6'],
                 'newPassword_confirmation' => ['required'],
             ]);
 
             $user->update([
-                'password'=>bcrypt(request('newPassword')),
+                'password' => bcrypt(request('newPassword')),
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
 
         // la photo de profil
-        if (request('avatarProfil')){
+        if (request('avatarProfil')) {
 
             //On supprime l'ancienne image si ce n'est pas l'image par defaut.
             $oldpicture = $user->avatar_path;
-            if($oldpicture !=='usersAvatar/avatarUserDefault.jpeg'){                
-                $filename = explode("/",$oldpicture);
+            if ($oldpicture !== 'usersAvatar/avatarUserDefault.jpeg') {
+                $filename = explode("/", $oldpicture);
                 $file = $filename[1];
-                Storage::delete('/public/usersAvatar/'.$file);
+                Storage::delete('/public/usersAvatar/' . $file);
             }
-            
+
             request()->validate([
                 'avatarProfil' => ['image'],
             ]);
 
-            $path = request('avatarProfil')->store('usersAvatar','public');
+            $path = request('avatarProfil')->store('usersAvatar', 'public');
 
             $user->update([
-                'avatar_path' =>$path,
+                'avatar_path' => $path,
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
-
         return back();
     }
 
@@ -123,166 +122,164 @@ class UpdateController extends Controller
 
         // Les catégories sont requises pour éviter toutes erreurs
         request()->validate([
-            'product_category'=>['required','array'],
+            'product_category' => ['required', 'array'],
         ]);
 
         // Le nom de la structure
-        if (request('business_name')){
+        if (request('business_name')) {
 
             $seller->update([
-                'business_name'=>request('business_name'),
+                'business_name' => request('business_name'),
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
         
         // La présentation
-        if (request('teaserSeller')){
+        if (request('teaserSeller')) {
 
             request()->validate([
-                'teaserSeller' => ['string','min:4'],
+                'teaserSeller' => ['string', 'min:4'],
             ]);
 
             $seller->update([
-                'presentation'=>request('teaserSeller'),
+                'presentation' => request('teaserSeller'),
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
 
         // le téléphone
-        if (request('phone')){
+        if (request('phone')) {
 
             request()->validate([
                 'phone' => ['string'],
             ]);
 
             $seller->update([
-                'telephone'=>request('phone'),
+                'telephone' => request('phone'),
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
 
         // l'adresse
-        if (request('address')){
+        if (request('address')) {
 
             request()->validate([
                 'address' => ['string'],
             ]);
 
             $seller->update([
-                'address'=>request('address'),
+                'address' => request('address'),
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
 
         // Les catégories
-        if (request('product_category')){
+        if (request('product_category')) {
 
             //On détache les anciennes catégories
             $seller->categories()->detach();
 
-
             // On attache le vendeur à ses categories
             $category = request('product_category');
             $seller->categories()->attach($category);
-
         }
 
         // Les coordonnées GPS
-        if(request('long')){
+        if (request('long')) {
 
             request()->validate([
-                'long'=>['numeric', 'between:-180,180'],
+                'long' => ['numeric', 'between:-180,180'],
             ]);
 
             $seller->update([
-                'longitude'=>request('long'),
+                'longitude' => request('long'),
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
 
-        if(request('lat')){
+        if (request('lat')) {
 
             request()->validate([
-                'lat'=>['required','numeric', 'between:-90,90'],
+                'lat' => ['required', 'numeric', 'between:-90,90'],
             ]);
 
             $seller->update([
-                'latitude'=>request('lat'),
+                'latitude' => request('lat'),
             ]);
 
             flash('Vos informations ont été mise à jour');
         }            
 
         // les photos du point de vente
-        if (request('avatarSeller1')){
+        if (request('avatarSeller1')) {
 
             request()->validate([
                 'avatarSeller1' => ['image'],
             ]);
 
             //ici on supprime l'ancienne photo si elle existe
-            if($seller->avatar1_path){
+            if ($seller->avatar1_path) {
                 $oldpicture = $seller->avatar1_path;
-                $filename = explode("/",$oldpicture);
+                $filename = explode("/", $oldpicture);
                 $file = $filename[1];
-                Storage::delete('/public/sellersAvatar/'.$file);
+                Storage::delete('/public/sellersAvatar/' . $file);
             }
 
-            $path = request('avatarSeller1')->store('sellersAvatar','public');
+            $path = request('avatarSeller1')->store('sellersAvatar', 'public');
 
             $seller->update([
-                'avatar1_path' =>$path,
+                'avatar1_path' => $path,
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
 
-        if (request('avatarSeller2')){
+        if (request('avatarSeller2')) {
 
             //ici on supprime l'ancienne photo si elle existe
-            if($seller->avatar2_path){
+            if ($seller->avatar2_path) {
                 $oldpicture = $seller->avatar2_path;
-                $filename = explode("/",$oldpicture);
+                $filename = explode("/", $oldpicture);
                 $file = $filename[1];
-                Storage::delete('/public/sellersAvatar/'.$file);
+                Storage::delete('/public/sellersAvatar/' . $file);
             }
-            
+
             request()->validate([
                 'avatarSeller2' => ['image'],
             ]);
 
-            $path = request('avatarSeller2')->store('sellersAvatar','public');
+            $path = request('avatarSeller2')->store('sellersAvatar', 'public');
 
             auth()->user()->seller()->update([
-                'avatar2_path' =>$path,
+                'avatar2_path' => $path,
             ]);
 
             flash('Vos informations ont été mise à jour');
         }
 
-        if (request('avatarSeller3')){
+        if (request('avatarSeller3')) {
 
             request()->validate([
                 'avatarSeller3' => ['image'],
             ]);
 
             //ici on supprime l'ancienne photo si elle existe
-            if($seller->avatar3_path){
+            if ($seller->avatar3_path) {
                 $oldpicture = $seller->avatar3_path;
-                $filename = explode("/",$oldpicture);
+                $filename = explode("/", $oldpicture);
                 $file = $filename[1];
-                Storage::delete('/public/sellersAvatar/'.$file);
+                Storage::delete('/public/sellersAvatar/' . $file);
             }
 
-            $path = request('avatarSeller3')->store('sellersAvatar','public');
+            $path = request('avatarSeller3')->store('sellersAvatar', 'public');
 
             auth()->user()->seller()->update([
-                'avatar3_path' =>$path,
+                'avatar3_path' => $path,
             ]);
 
             flash('Vos informations ont été mise à jour');
@@ -290,5 +287,4 @@ class UpdateController extends Controller
 
         return back();
     }
-
 }
