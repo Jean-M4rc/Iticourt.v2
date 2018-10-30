@@ -15,25 +15,16 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-
-        'firstname','nickname','email','password','avatar_path','ban'
-    ];
+    protected $fillable = ['firstname', 'nickname', 'email', 'password', 'avatar_path', 'ban'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
-    protected $dates = [
-        'created_at'=> 'datetime:d-m-Y',
-        'updated_at',
-        'deleted_at'
-    ];
+    protected $dates = ['created_at' => 'datetime:d-m-Y', 'updated_at', 'deleted_at'];
 
     public function seller()
     {

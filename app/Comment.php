@@ -11,10 +11,7 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $fillable = [
-
-        'user_id','seller_id','title','content',
-    ];
+    protected $fillable = ['user_id','seller_id','title','content'];
 
     public function seller()
     {
