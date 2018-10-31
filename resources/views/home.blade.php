@@ -15,17 +15,17 @@
     <div class="row w-100">
 
         <div id="buyingblock" class="col-12 col-md-6 flex-column flex-center">
-            <a id="buybtn1" href="#" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="signinlink titleblock">
+            <a id="buybtn1" href="#">
                 <i class="fas fa-shopping-basket fa-5x flex-center"></i>
                 <p class="lead text-center">Vous achetez !</p>
             </a>
         </div>
         
         <div id="signinlink" class="col-12 col-md-6 flex-column flex-center">
-                <a href="" data-toggle="modal" data-target="#logInModal">
-                    <i class="fas fa-home fa-5x flex-center"></i>
-                    <p class="lead ">Vous vendez !</p>
-                </a>
+            <a href="" data-toggle="modal" data-target="#logInModal">
+                <i class="fas fa-home fa-5x flex-center"></i>
+                <p class="lead ">Vous vendez !</p>
+            </a>
         </div>
             
     </div>

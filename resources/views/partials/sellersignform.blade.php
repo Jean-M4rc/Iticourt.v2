@@ -171,7 +171,7 @@
 
         </div>
 
-        <div class="alert alert-warning text-center">Attention si <strong class="text-danger">"Je confirme être un vendeur"</strong> n'est pas cochée vos informations de vendeur ne seront pas enregistrées et vous serez ne serez pas inscrit.</div>
+        <div class="alert alert-warning text-center">Attention si <strong class="text-danger">"Je confirme être un vendeur"</strong> n'est pas cochée vos informations de vendeur ne seront pas enregistrées et vous ne serez pas inscrit.</div>
             
         <button type="submit" class="btn btn-dark btn-lg btn-block">M'inscrire en <span class="d-inline d-sm-none"><br></span>tant que vendeur</button>
         

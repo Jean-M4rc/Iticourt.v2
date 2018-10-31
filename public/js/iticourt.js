@@ -22,7 +22,8 @@ var titleBlock = document.getElementById("titleblock"),
     usercoord,
     sellerId,
     overlayMaps,
-    inputsControlsLayers = [];
+    inputsControlsLayers = [],
+    cantclick = true;
 
 // ------------------------------------------------------- //
 // ------------------------- MAP ------------------------- //
@@ -386,7 +387,11 @@ var animDOM = {
         $('#navbar').show('slow');
         $(titleblock).show('slow');
         $(signinlink).show('slow');
-        $(buyingblock).show('slow');        
+        $(buyingblock).show('slow');
+
+        setTimeout(function(){ cantclick = true },2000);
+        cantclick = false;
+           
     },
 
     showMapSeller: function(){
@@ -411,6 +416,9 @@ var animDOM = {
         $(sellerFile).show('slow');
         $('#navbar').show('slow');
         $(mapBoxRouting).hide('slow');
+
+        setTimeout(function(){ cantclick = true },2000);
+        cantclick = false;
         
     }
 };
@@ -419,8 +427,12 @@ var animDOM = {
 // ----------------------- EVENTS ------------------------ //
 // ------------------------------------------------------- //
 
-$('#buybtn1').click(function () {
-    animDOM.showMap();
+$('#buybtn1').click(function (e) {
+    if(!cantclick){
+        e.preventDefault();
+    } else {
+        animDOM.showMap();
+    }
 });
 
 $(cancelmap).click(function () {
@@ -431,10 +443,16 @@ $('#getCoordonates').click(function () {
     mapComponent.getPositionForm();
 });
 
-$(btnrouting).click(function() {
-    animDOM.showMapSeller();
+$(btnrouting).click(function(e) {
+    if(!cantclick){
+        e.preventDefault();
+    } else {
+        animDOM.showMapSeller();
+    }
 });
 
 $('#closeModalError').click(function(){
     animDOM.hideMapSeller();
 });
+
+
