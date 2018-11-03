@@ -8,7 +8,7 @@
         <p class="lead text-center container">L'itinéraire des circuits courts</p>
         <hr>
 
-        <div class="row d-none d-md-block mt-5" style="height:150px"></div>
+        <div class="row d-none d-md-block mt-5" style="height:150px;width:100vw"></div>
 
     </div>
 
