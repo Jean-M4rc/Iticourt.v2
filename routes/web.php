@@ -39,7 +39,9 @@ Route::group(['middleware' => 'App\Http\Middleware\Auth'], function () {
 
     Route::post('/deleteSeller', 'RootController@deleteSeller');
 
-    Route::post('/moderateComment', 'RootController@moderateComment');
+    Route::post('/moderateComment', 'CommentsController@moderateComment');
+
+    Route::post('/deleteComment', 'CommentsController@deleteComment');
 
     Route::get('/profil', 'CompteController@accueil');
 

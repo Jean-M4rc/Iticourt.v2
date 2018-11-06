@@ -29,4 +29,17 @@ class CommentsController extends Controller
 
         return back();
     }
+
+    public function moderateComment()
+    {
+        // Modération
+        return back();
+    }
+
+    public function deleteComment()
+    {
+        // Suppression d'un commentaire
+        return back();
+    }
+
 }

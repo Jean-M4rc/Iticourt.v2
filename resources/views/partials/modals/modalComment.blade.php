@@ -13,6 +13,7 @@
                 <p class="text-primary">Auteur : {{ $comment->user->nickname }}</p>
                 <p class="text-dark">Point de vente commenté : {{ $comment->seller->business_name }}</p>
                 <p class="text-primary">Crée le : {{ $comment->created_at->format('d/m/Y à H:i:s') }}</p>
+                <p class="text-dark">Message : {{ $comment->content }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
@@ -21,10 +22,8 @@
                         @csrf
                         <fieldset>
                             <input type="hidden" name="comment_id" value="{{$comment->id}}">
-                            <p class="text-dark">Message : {{ $comment->content }}</p>
                             <button type="submit" class="btn btn-primary">Modérer</button>
                         </fieldset>
-                        
                     </form>
                 </div>
                 <div>
