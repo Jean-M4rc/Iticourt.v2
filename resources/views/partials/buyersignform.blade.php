@@ -8,7 +8,7 @@
 
         <small class="form-text text-muted"><span style="color:red">*</span> : Champs requis.</small><br/>
 
-        <button type="submit" class="btn btn-primary btn-lg btn-block">M'inscrire en tant qu'acheteur</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">M'inscrire en tant<span class="d-inline d-sm-none"><br></span> qu'acheteur</button>
 
     </fieldset>
 
